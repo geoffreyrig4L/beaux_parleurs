@@ -15,7 +15,7 @@ const schema = yup.object().shape({
         .shape({
           database: yup.string().required(),
           user: yup.string().required(),
-          password: yup.string(),
+          password: yup.string().required(),
           host: yup.string(),
           port: portValidator,
         })
@@ -36,6 +36,14 @@ const rawConfig = {
       password: process.env.DB_PASSWORD,
     },
     migrations: { stub: "./src/db/migration.stub.js" },
+  },
+  security: {
+    password: {
+      saltLength: 32,
+      iterations: 10000,
+      keylen: 256,
+      digest: "sha512",
+    },
   },
 }
 
