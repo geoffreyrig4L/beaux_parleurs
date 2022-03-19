@@ -1,6 +1,7 @@
-import UserModel from "../db/models/User.js"
+import UserModel from "../models/User.js"
 import jsonwebtoken from "jsonwebtoken"
 import config from "../config.js"
+import auth from "../middlewares/auth.js"
 
 const sessionRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
@@ -63,6 +64,9 @@ const sessionRoutes = ({ app }) => {
       { expiresIn: config.security.password.expiresIn }
     )
     res.send({ data: jwt })
+  })
+  app.get("/session", auth, async (req, res) => {
+    res.send("ALL GOOD")
   })
 }
 

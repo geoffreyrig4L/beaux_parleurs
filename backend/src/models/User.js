@@ -1,6 +1,6 @@
 import { Model } from "objection"
 import { randomBytes, pbkdf2Sync } from "crypto"
-import config from "../../config.js"
+import config from "../config.js"
 
 const {
   security: {
