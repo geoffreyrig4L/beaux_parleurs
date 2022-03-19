@@ -3,9 +3,20 @@ import jsonwebtoken from "jsonwebtoken"
 import config from "../config.js"
 
 const sessionRoutes = ({ app }) => {
-  app.post("sign-up", async (req, res) => {
+  app.post("/sign-up", async (req, res) => {
     const {
-      body: { email, password },
+      body: {
+        firstName,
+        lastName,
+        email,
+        password,
+        birthdate,
+        addressLine,
+        city,
+        zipcode,
+        country,
+        phone,
+      },
     } = req
 
     const existingUser = await UserModel.query().findOne({ email })
@@ -18,12 +29,20 @@ const sessionRoutes = ({ app }) => {
     const [hash, salt] = UserModel.hashPassword(password)
 
     await UserModel.query().insert({
+      firstName,
+      lastName,
       email,
       passwordHash: hash,
       passwordSalt: salt,
+      birthdate,
+      addressLine,
+      city,
+      zipcode,
+      country,
+      phone,
     })
 
-    req.send({})
+    res.send({})
   })
   app.post("/sign-in", async (req, res) => {
     const {

@@ -12,7 +12,6 @@ export const up = async (knex) => {
     table.text("zipcode").notNullable()
     table.text("country").notNullable()
     table.text("phone").notNullable().unique()
-    table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("topics", (table) => {
     table.increments("id")

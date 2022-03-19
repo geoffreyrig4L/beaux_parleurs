@@ -1,0 +1,21 @@
+nodemon server 
+npm run dev
+npx knex migrate:make initial-schema
+npx knex migrate:latest         -> Pour mettre a jour le matching de la base de donnee du node_env 
+npx knex migrate:rollback       -> Annuler la maj 
+
+Creer un user avec sign-up : 
+curl -X POST localhost:3001/sign-up 
+-H 'Content-Type:application/json' 
+-d '{
+    "firstName":"Arthur",
+    "lastName":"Germain",
+    "email":"arthur@gmail.com", 
+    "password":"mdp",
+    "birthdate":"2000-06-14",
+    "addressLine":"32 rue des boulangers",
+    "city":"Nanterre",
+    "zipcode":"92000",
+    "country":"France",
+    "phone":"0623786544"
+    }'
