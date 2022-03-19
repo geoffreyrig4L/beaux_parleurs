@@ -21,13 +21,8 @@ curl -X POST localhost:3001/sign-up
     }'
 
 Pour se connecter avec sign-in : 
-curl -X POST localhost:3001/sign-up 
--H 'Content-Type:application/json' 
--d '{
-    "email":"arthur@gmail.com", 
-    "password":"mdp",
-    }'
+curl -X POST localhost:3001/sign-in -H 'Content-Type:application/json' -d '{"email":"arthur@gmail.com", "password":"mdp"}'
 
 Pour se relier a une session : 
 récupérer le token grace a la cmd ci dessus puis ...
-curl localhost:3001/session -H "authentification: /token/ "
+curl localhost:3001/session -H "authentification:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXIiOnsiaWQiOjMsImVtYWlsIjoiYXJ0aHVyQGdtYWlsLmNvbSJ9fSwiaWF0IjoxNjQ3NzIwMDQ0LCJleHAiOjE2NDc4OTI4NDR9.3RcuR-HMh5Q9JyDlyiOQuZ45VOENoijVv9Rq7NPNg8o"

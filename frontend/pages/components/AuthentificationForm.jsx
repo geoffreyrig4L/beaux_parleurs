@@ -13,7 +13,7 @@ const AuthentificationForm = () => {
   return (
     <div>
       <Formik
-        initiaValues={{ email: "", password: "" }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={handleFormSubmit}
       >
         {({ handleSubmit, isSubmitting, isValid }) => (

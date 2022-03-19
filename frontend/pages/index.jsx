@@ -1,4 +1,4 @@
-import { AuthentificationForm } from "./components/AuthentificationForm"
+import AuthentificationForm from "./components/AuthentificationForm"
 
 const indexPage = () => {
   return (
