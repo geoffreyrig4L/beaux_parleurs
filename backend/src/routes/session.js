@@ -63,11 +63,12 @@ const sessionRoutes = ({ app }) => {
       config.security.password.secret,
       { expiresIn: config.security.password.expiresIn }
     )
-    res.send({ data: jwt })
+    res.send({ jwt })
   })
+  /*
   app.get("/session", auth, async (req, res) => {
     res.send("ALL GOOD")
-  })
+  })*/
 }
 
 export default sessionRoutes
