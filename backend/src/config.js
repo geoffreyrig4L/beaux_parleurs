@@ -4,6 +4,8 @@ import * as yup from "yup"
 
 const portValidator = yup.number().integer()
 
+//on insere dans le schema uniquement les données qui ne sont pas en dur dans la const rawConfig
+
 const schema = yup.object().shape({
   port: yup.number().integer().required().getDefault(),
   db: yup
@@ -22,6 +24,11 @@ const schema = yup.object().shape({
         .required(),
     })
     .required(),
+  security: yup.object().shape({
+    password: yup.object().shape({
+      secret: yup.string().min(32).required(),
+    }),
+  }),
 })
 
 const rawConfig = {
@@ -43,6 +50,8 @@ const rawConfig = {
       iterations: 10000,
       keylen: 256,
       digest: "sha512",
+      expiresIn: "2 days",
+      secret: process.env.JWT_SECRET,
     },
   },
 }
