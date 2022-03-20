@@ -11,7 +11,7 @@ export const AppContextProvider = (props) => {
       return
     }
     const [payload] = jwt.split(".")
-    const session = atob(payload) //convertit le format base64 en texte normal
+    const session = atob(payload)
     setSession(session)
   }, [])
 
@@ -24,7 +24,7 @@ export const AppContextProvider = (props) => {
     try {
       const {
         data: { jwt },
-      } = api.post("/sign-in", { email, password })
+      } = await api.post("/sign-in", { email, password })
       localStorage.setItem("jwt", jwt)
       initSession(jwt)
     } catch (err) {

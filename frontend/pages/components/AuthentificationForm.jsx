@@ -1,4 +1,4 @@
-import { Formik } from "formik"
+import { Formik, Field } from "formik"
 import { useCallback, useContext } from "react"
 import AppContext from "./AppContext"
 
@@ -18,8 +18,8 @@ const AuthentificationForm = () => {
       >
         {({ handleSubmit, isSubmitting, isValid }) => (
           <form onSubmit={handleSubmit}>
-            <input type="email" name="email" placeholder="E-mail" />
-            <input type="password" name="password" placeholder="Password" />
+            <Field type="email" name="email" placeholder="E-mail" />
+            <Field type="password" name="password" placeholder="Password" />
             <button disabled={!isSubmitting && !isValid}>Sign In</button>
           </form>
         )}

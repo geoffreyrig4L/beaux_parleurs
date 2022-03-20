@@ -3,6 +3,7 @@ import knex from "knex"
 import { Model } from "objection"
 import pino from "pino"
 import config from "./src/config.js"
+import cors from "cors"
 import sessionRoutes from "./src/routes/session.js"
 
 const logger = pino({
@@ -18,6 +19,12 @@ const app = express()
 app.use(express.json())
 
 Model.knex(db)
+
+app.use(
+  cors({
+    origin: process.env.WEB_APP_ORIGIN,
+  })
+)
 
 sessionRoutes({ app })
 

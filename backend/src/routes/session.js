@@ -65,10 +65,9 @@ const sessionRoutes = ({ app }) => {
     )
     res.send({ jwt })
   })
-  /*
   app.get("/session", auth, async (req, res) => {
     res.send("ALL GOOD")
-  })*/
+  })
 }
 
 export default sessionRoutes
