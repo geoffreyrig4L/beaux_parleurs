@@ -1,9 +1,8 @@
 import { AppContextProvider } from "./components/AppContext"
 
 const App = ({ Component, pageProps, ...otherProps }) => {
-  localStorage.setItem("jwt", "")
   return (
-    <AppContextProvider>
+    <AppContextProvider pageComponent={Component} router={otherProps.router}>
       <Component {...pageProps} {...otherProps} />
     </AppContextProvider> //otherprops contient un router pré-rempli
   )
