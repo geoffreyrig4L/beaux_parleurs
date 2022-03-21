@@ -1,11 +1,3 @@
-import AuthenticationForm from "./components/AuthenticationForm"
-
-const indexPage = () => {
-  return (
-    <div>
-      <AuthenticationForm />
-    </div>
-  )
-}
+const indexPage = () => <h1>Sujets :</h1>
 
 export default indexPage
