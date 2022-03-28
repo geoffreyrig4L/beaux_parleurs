@@ -14,10 +14,7 @@ const AddTopicComponent = () => {
 
   const textArea = () => {
     return (
-      <textarea
-        className="pl-[12px] mb-[10px] bg-gray-50 h-24 max-h-80"
-        required
-      />
+      <textarea className="mb-[10px] bg-gray-50 h-24 max-h-80 p-2" required />
     )
   }
 

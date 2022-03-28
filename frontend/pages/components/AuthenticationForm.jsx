@@ -37,7 +37,7 @@ const AuthentificationForm = () => {
               name="password"
             />
 
-            <button className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg">
+            <button className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg hover:bg-teal-600 hover:text-white">
               Se connecter
             </button>
           </form>
