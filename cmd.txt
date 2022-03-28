@@ -8,16 +8,16 @@ Creer un user avec sign-up :
 curl -X POST localhost:3001/sign-up 
 -H 'Content-Type:application/json' 
 -d '{
-    "firstName":"Arthur",
-    "lastName":"Germain",
+    "prenom":"Arthur",
+    "nom":"Germain",
     "email":"arthur@gmail.com", 
     "password":"mdp",
-    "birthdate":"2000-06-14",
-    "addressLine":"32 rue des boulangers",
-    "city":"Nanterre",
-    "zipcode":"92000",
-    "country":"France",
-    "phone":"0623786544"
+    "dateNaissance":"2000-06-14",
+    "adresse":"32 rue des boulangers",
+    "ville":"Nanterre",
+    "codePostal":"92000",
+    "pays":"France",
+    "telephone":"0623786544"
     }'
 
 Pour se connecter avec sign-in : 

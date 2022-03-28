@@ -7,16 +7,16 @@ const sessionRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
     const {
       body: {
-        firstName,
-        lastName,
+        prenom,
+        nom,
         email,
         password,
-        birthdate,
-        addressLine,
-        city,
-        zipcode,
-        country,
-        phone,
+        dateNaissance,
+        adresse,
+        ville,
+        codePostal,
+        pays,
+        telephone,
       },
     } = req
 
@@ -30,17 +30,17 @@ const sessionRoutes = ({ app }) => {
     const [hash, salt] = UserModel.hashPassword(password)
 
     await UserModel.query().insert({
-      firstName,
-      lastName,
+      prenom,
+      nom,
       email,
       passwordHash: hash,
       passwordSalt: salt,
-      birthdate,
-      addressLine,
-      city,
-      zipcode,
-      country,
-      phone,
+      dateNaissance,
+      adresse,
+      ville,
+      codePostal,
+      pays,
+      telephone,
     })
 
     res.send({})

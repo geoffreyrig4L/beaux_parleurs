@@ -1,32 +1,32 @@
 export const up = async (knex) => {
-  await knex.schema.createTable("users", (table) => {
+  await knex.schema.createTable("utilisateurs", (table) => {
     table.increments("id")
-    table.text("firstName").notNullable()
-    table.text("lastName").notNullable()
+    table.text("prenom").notNullable()
+    table.text("nom").notNullable()
     table.text("email").notNullable().unique()
     table.text("passwordHash").notNullable()
     table.text("passwordSalt").notNullable()
-    table.date("birthdate").notNullable()
-    table.text("addressLine").notNullable()
-    table.text("city").notNullable()
-    table.text("zipcode").notNullable()
-    table.text("country").notNullable()
-    table.text("phone").notNullable().unique()
+    table.date("dateNaissance").notNullable()
+    table.text("adresse").notNullable()
+    table.text("ville").notNullable()
+    table.text("codePostal").notNullable()
+    table.text("pays").notNullable()
+    table.text("telephone").notNullable().unique()
   })
-  await knex.schema.createTable("topics", (table) => {
+  await knex.schema.createTable("sujets", (table) => {
     table.increments("id")
-    table.text("name").notNullable()
-    table.text("creationDate").notNullable()
+    table.text("nom").notNullable()
+    table.text("dateCreation").notNullable()
   })
-  await knex.schema.createTable("comments", (table) => {
+  await knex.schema.createTable("commentaires", (table) => {
     table.increments("id")
-    table.text("content").notNullable()
-    table.text("sendingDate").notNullable()
+    table.text("contenu").notNullable()
+    table.text("dateEnvoi").notNullable()
   })
 }
 
 export const down = async (knex) => {
-  await knex.schema.dropTable("users")
-  await knex.schema.dropTable("topics")
-  await knex.schema.dropTable("comments")
+  await knex.schema.dropTable("utilisateurs")
+  await knex.schema.dropTable("sujets")
+  await knex.schema.dropTable("commentaires")
 }

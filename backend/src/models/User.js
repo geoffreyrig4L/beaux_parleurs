@@ -9,7 +9,7 @@ const {
 } = config
 
 class UserModel extends Model {
-  static tableName = "users"
+  static tableName = "utilisateurs"
 
   checkPassword = (password) => {
     const [hash] = UserModel.hashPassword(password, this.passwordSalt)

@@ -2,18 +2,29 @@ import { Formik, Field } from "formik"
 import { useCallback, useContext } from "react"
 import AppContext from "./AppContext"
 
-const AuthentificationForm = () => {
-  const { signIn } = useContext(AppContext)
+const AddTopicComponent = () => {
+  const { addTopic } = useContext(AppContext)
+
   const handleFormSubmit = useCallback(
-    async ({ email, password }) => {
-      return signIn(email, password)
+    async ({ titre, contenu }) => {
+      return addTopic(titre, contenu)
     },
-    [signIn]
+    [addTopic]
   )
+
+  const textArea = () => {
+    return (
+      <textarea
+        className="pl-[12px] mb-[10px] bg-gray-50 h-24 max-h-80"
+        required
+      />
+    )
+  }
+
   return (
     <div>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        intialValues={{ titre: "", contenu: "" }}
         onSubmit={handleFormSubmit}
       >
         {({ handleSubmit, isSubmitting, isValid }) => (
@@ -21,24 +32,17 @@ const AuthentificationForm = () => {
             className="flex flex-col m-auto w-[600px]"
             onSubmit={handleSubmit}
           >
-            <label className="mr-[20px] mb-[6px] font-bold">Email : </label>
+            <label className="mr-[20px] mb-[6px] font-bold">Titre :</label>
             <Field
               className="pl-[12px] mb-[10px] bg-gray-50 h-8"
-              type="email"
-              name="email"
+              name="titre"
             />
-
             <label className="mr-[20px] mb-[6px] font-bold">
-              Mot de passe:
+              Premier message :
             </label>
-            <Field
-              className="pl-[12px] mb-[10px] bg-gray-50 h-8"
-              type="password"
-              name="password"
-            />
-
+            <Field name="contenu" as={textArea} />
             <button className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg">
-              Se connecter
+              Publier
             </button>
           </form>
         )}
@@ -47,4 +51,4 @@ const AuthentificationForm = () => {
   )
 }
 
-export default AuthentificationForm
+export default AddTopicComponent
