@@ -1,69 +1,9 @@
-import UtilisateurModel from "../models/Utilisateur.js"
-import jsonwebtoken from "jsonwebtoken"
-import config from "../config.js"
+import express from "express"
+import { signUp, signIn, modifyAccount } from "../controllers/session.js"
 
-const sessionRoutes = ({ app }) => {
-  app.post("/sign-up", async (req, res) => {
-    const {
-      body: {
-        prenom,
-        nom,
-        email,
-        password,
-        dateNaissance,
-        adresse,
-        ville,
-        codePostal,
-        pays,
-        telephone,
-      },
-    } = req
+const router = express.Router()
 
-    const existingUser = await UtilisateurModel.query().findOne({ email })
+router.post("/sign-up", signUp)
+router.post("/sign-in", signIn)
 
-    if (existingUser) {
-      res.send({})
-      return
-    }
-
-    const [hash, salt] = UtilisateurModel.hashPassword(password)
-
-    await UtilisateurModel.query().insert({
-      prenom,
-      nom,
-      email,
-      passwordHash: hash,
-      passwordSalt: salt,
-      dateNaissance,
-      adresse,
-      ville,
-      codePostal,
-      pays,
-      telephone,
-    })
-
-    res.send({})
-  })
-  app.post("/sign-in", async (req, res) => {
-    const {
-      body: { email, password },
-    } = req
-
-    const user = await UtilisateurModel.query().findOne({ email })
-
-    if (!user || !user.checkPassword(password)) {
-      res.status(401).send({ error: "Invalid credentials" })
-      return
-    }
-    const jwt = jsonwebtoken.sign(
-      {
-        payload: { user: { id: user.id, email: user.email } },
-      },
-      config.security.password.secret,
-      { expiresIn: config.security.password.expiresIn }
-    )
-    res.send({ jwt })
-  })
-}
-
-export default sessionRoutes
+export default router

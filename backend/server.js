@@ -5,6 +5,9 @@ import pino from "pino"
 import config from "./src/config.js"
 import cors from "cors"
 import sessionRoutes from "./src/routes/session.js"
+import sujetRoutes from "./src/routes/sujet.js"
+import commentaireRoutes from "./src/routes/commentaire.js"
+import utilisateurRoutes from "./src/routes/utilisateur.js"
 
 const logger = pino({
   transport: {
@@ -26,6 +29,9 @@ app.use(
   })
 )
 
-sessionRoutes({ app })
+app.use("/sessions", sessionRoutes)
+app.use("/utilisateurs", utilisateurRoutes)
+app.use("/sujets", sujetRoutes)
+app.use("/commentaires", commentaireRoutes)
 
 app.listen(3001, () => logger.info(`Listening on ${config.port}`))
