@@ -46,10 +46,45 @@ export const AppContextProvider = (props) => {
     }
   }, [])
 
+  const signUp = useCallback(
+    async (
+      prenom,
+      nom,
+      adresse,
+      ville,
+      pays,
+      codePostal,
+      dateNaissance,
+      telephone,
+      email,
+      password
+    ) => {
+      try {
+        await api.post("/sign-up", {
+          prenom,
+          nom,
+          adresse,
+          ville,
+          pays,
+          codePostal,
+          dateNaissance,
+          telephone,
+          email,
+          password,
+        })
+        router.push("/sign-in")
+      } catch (err) {
+        return { error: err }
+      }
+    }
+  )
+
   if (!session && Page.private) {
     return null
   }
-  return <AppContext.Provider {...otherProps} value={{ session, signIn }} />
+  return (
+    <AppContext.Provider {...otherProps} value={{ session, signIn, signUp }} />
+  )
 }
 
 export default AppContext

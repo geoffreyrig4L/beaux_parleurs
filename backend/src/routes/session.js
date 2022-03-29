@@ -1,7 +1,6 @@
-import UserModel from "../models/User.js"
+import UtilisateurModel from "../models/Utilisateur.js"
 import jsonwebtoken from "jsonwebtoken"
 import config from "../config.js"
-import auth from "../middlewares/auth.js"
 
 const sessionRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
@@ -20,16 +19,16 @@ const sessionRoutes = ({ app }) => {
       },
     } = req
 
-    const existingUser = await UserModel.query().findOne({ email })
+    const existingUser = await UtilisateurModel.query().findOne({ email })
 
     if (existingUser) {
       res.send({})
       return
     }
 
-    const [hash, salt] = UserModel.hashPassword(password)
+    const [hash, salt] = UtilisateurModel.hashPassword(password)
 
-    await UserModel.query().insert({
+    await UtilisateurModel.query().insert({
       prenom,
       nom,
       email,
@@ -50,7 +49,7 @@ const sessionRoutes = ({ app }) => {
       body: { email, password },
     } = req
 
-    const user = await UserModel.query().findOne({ email })
+    const user = await UtilisateurModel.query().findOne({ email })
 
     if (!user || !user.checkPassword(password)) {
       res.status(401).send({ error: "Invalid credentials" })

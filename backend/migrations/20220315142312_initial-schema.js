@@ -12,16 +12,39 @@ export const up = async (knex) => {
     table.text("codePostal").notNullable()
     table.text("pays").notNullable()
     table.text("telephone").notNullable().unique()
+    table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("sujets", (table) => {
     table.increments("id")
     table.text("nom").notNullable()
-    table.text("dateCreation").notNullable()
+    table.integer("like")
+    table.integer("utilisateurs_id").notNullable()
+    table
+      .foreign("utilisateurs_id")
+      .references("id")
+      .inTable("utilisateurs")
+      .onDelete("SET NULL")
+    table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("commentaires", (table) => {
     table.increments("id")
     table.text("contenu").notNullable()
+    table.date("publicationDate").notNullable()
+    table.integer("like")
     table.text("dateEnvoi").notNullable()
+    table.integer("sujets_id").notNullable()
+    table
+      .foreign("sujets_id")
+      .references("id")
+      .inTable("sujets")
+      .onDelete("CASCADE")
+    table.integer("utilisateurs_id").notNullable()
+    table
+      .foreign("utilisateurs_id")
+      .references("id")
+      .inTable("utilisateurs")
+      .onDelete("SET NULL")
+    table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
 }
 
