@@ -1,9 +1,12 @@
-const express = require("express")
-const router = express.Router()
-const auth = require("../middleware/auth.js")
-const sujetController = require("../controller/sujet")
+import express from "express"
 
-router.get("/", auth, sujetController.getOneSujet)
-router.put("/:id", auth, sujetController.modifySujet)
-router.post("/", auth, sujetController.createSujet)
-router.post("/:id", auth, sujetController.deleteSujet)
+import auth from "../middleware/auth.js"
+import { getSujets, getSujet, createSujet } from "../controller/sujet.js"
+
+const router = express.Router()
+
+router.get("/", auth, getSujets)
+router.post("/", auth, createSujet)
+router.post("/:id", auth, getSujet)
+
+export default router

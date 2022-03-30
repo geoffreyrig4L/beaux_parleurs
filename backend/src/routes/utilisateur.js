@@ -1,9 +1,9 @@
-const express = require("express")
-const router = express.Router()
-const auth = require("../middleware/auth.js")
-const utilisateurController = require("../controller/utilisateur")
+import express from "express"
+import auth from "../middleware/auth.js"
+import { getUtilisateur } from "../controller/utilisateur.js"
 
-router.get("/", auth, utilisateurController.getOneUtilisateur)
-router.put("/:id", auth, utilisateurController.modifyUtilisateur)
-router.post("/", auth, utilisateurController.createUtilisateur)
-router.post("/:id", auth, utilisateurController.deleteUtilisateur)
+const router = express.Router()
+
+router.get("/:id", auth, getUtilisateur)
+
+export default router

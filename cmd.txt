@@ -1,27 +1,14 @@
 nodemon server 
 npm run dev
 npx knex migrate:make initial-schema
-npx knex migrate:latest         -> Pour mettre a jour le matching de la base de donnee du node_env 
-npx knex migrate:rollback       -> Annuler la maj 
+npx knex migrate:latest -> Pour mettre a jour le matching de la base de donnee du node_env 
+npx knex migrate:rollback   -> Annuler la maj 
 
 Creer un user avec sign-up : 
-curl -X POST localhost:3001/sign-up 
--H 'Content-Type:application/json' 
--d '{
-    "prenom":"Arthur",
-    "nom":"Germain",
-    "email":"arthur@gmail.com", 
-    "password":"mdp",
-    "dateNaissance":"2000-06-14",
-    "adresse":"32 rue des boulangers",
-    "ville":"Nanterre",
-    "codePostal":"92000",
-    "pays":"France",
-    "telephone":"0623786544"
-    }'
+curl -X POST localhost:3001/sessions/sign-up -H 'Content-Type:application/json' -d '{"prenom":"Arthur","nom":"Germain","email":"arthur@gmail.com", "password":"mdp","dateNaissance":"2000-06-14","adresse":"32 rue des boulangers","ville":"Nanterre","codePostal":"92000","pays":"France","telephone":"0623786544"}'
 
 Pour se connecter avec sign-in : 
-curl -X POST localhost:3001/sign-in -H 'Content-Type:application/json' -d '{"email":"arthur@gmail.com", "password":"mdp"}'
+curl -X POST localhost:3001/sessions/sign-in -H 'Content-Type:application/json' -d '{"email":"arthur@gmail.com", "password":"mdp"}'
 
 Pour se relier a une session : 
 récupérer le token grace a la cmd ci dessus puis ...

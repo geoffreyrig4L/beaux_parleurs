@@ -7,6 +7,7 @@ const auth = async (req, res, next) => {
   const {
     headers: { authentification: jwt },
   } = req
+
   if (!jwt) {
     res.status(403).send({ error: "no pasaran !" })
     return

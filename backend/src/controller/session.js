@@ -1,9 +1,8 @@
-import UtilisateurModel from "../models/Utilisateur.js"
+import UtilisateurModel from "../models/utilisateur.js"
 import jsonwebtoken from "jsonwebtoken"
 import config from "../config.js"
 
 export const signUp = async (req, res) => {
-  /*
   const {
     body: {
       prenom,
@@ -43,7 +42,6 @@ export const signUp = async (req, res) => {
   })
 
   res.send({})
-  */
 }
 
 export const signIn = async (req, res) => {

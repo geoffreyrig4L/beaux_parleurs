@@ -1,6 +1,6 @@
 import { Model } from "objection"
-import SujetModel from "./Sujet"
-import UtilisateurModel from "./Utilisateur"
+import SujetModel from "./sujet.js"
+import UtilisateurModel from "./utilisateur.js"
 
 class CommentaireModel extends Model {
   static tableName = "commentaires"

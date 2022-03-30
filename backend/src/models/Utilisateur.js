@@ -1,6 +1,8 @@
 import { Model } from "objection"
 import { randomBytes, pbkdf2Sync } from "crypto"
 import config from "../config.js"
+import SujetModel from "./sujet.js"
+import CommentaireModel from "./commentaire.js"
 
 const {
   security: {
@@ -22,7 +24,7 @@ class UtilisateurModel extends Model {
         },
       },
       commentaires: {
-        modelClass: CommentairesModel,
+        modelClass: CommentaireModel,
         relation: Model.HasManyRelation,
         join: {
           from: "utilisateurs.id",

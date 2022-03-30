@@ -1,9 +1,16 @@
-const express = require("express")
-const router = express.Router()
-const auth = require("../middleware/auth.js")
-const commentaireController = require("../controller/commentaire")
+import express from "express"
+import {
+  getCommentaires,
+  modifyCommentaire,
+  deleteCommentaire,
+} from "../controller/commentaire.js"
+import auth from "../middleware/auth.js"
 
-router.get("/", auth, commentaireController.getOneCommentaire)
-router.put("/:id", auth, commentaireController.modifyCommentaire)
-router.post("/", auth, commentaireController.createCommentaire)
-router.post("/:id", auth, commentaireController.deleteCommentaire)
+const router = express.Router()
+
+router.get("/sujets/:id/commentaire?trierPar=:trieur", auth, getCommentaires)
+router.put("/:id", auth, modifyCommentaire)
+//router.post("/", auth, createCommentaire)
+router.post("/:id", auth, deleteCommentaire)
+
+export default router
