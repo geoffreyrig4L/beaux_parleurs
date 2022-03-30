@@ -1,5 +1,0 @@
-export const createSujet = {}
-
-export const getSujets = {}
-
-export const getSujet = {}

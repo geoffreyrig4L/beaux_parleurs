@@ -1,10 +1,11 @@
 import { Model } from "objection"
 import UtilisateurModel from "./utilisateur.js"
+import CommentaireModel from "./commentaire.js"
 
 class SujetModel extends Model {
   static tableName = "sujets"
 
-  static get relationMappins() {
+  static get relationMappings() {
     return {
       utilisateurs: {
         modelClass: UtilisateurModel,

@@ -7,6 +7,6 @@ const router = express.Router()
 
 router.get("/", auth, getSujets)
 router.post("/", auth, createSujet)
-router.post("/:id", auth, getSujet)
+router.get("/:sujetId", auth, getSujet)
 
 export default router

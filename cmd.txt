@@ -13,3 +13,12 @@ curl -X POST localhost:3001/sessions/sign-in -H 'Content-Type:application/json' 
 Pour se relier a une session : 
 récupérer le token grace a la cmd ci dessus puis ...
 curl localhost:3001/session -H "authentification:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXIiOnsiaWQiOjMsImVtYWlsIjoiYXJ0aHVyQGdtYWlsLmNvbSJ9fSwiaWF0IjoxNjQ3NzIwMDQ0LCJleHAiOjE2NDc4OTI4NDR9.3RcuR-HMh5Q9JyDlyiOQuZ45VOENoijVv9Rq7NPNg8o"
+
+POST sujet : 
+curl -X POST localhost:3001/sujets/ -H 'Content-Type:application/json' -H 'authentification: {token}' -d  '{"nom":"Comment faire une blanquette ?","like":4,"utilisateurs_id":1}'
+
+GET all sujets :
+curl localhost:3001/sujets -H "authentification : {token} "
+
+GET sujet : 
+curl localhost:3001/sujets/1 -H "authentification : {token} "
