@@ -18,9 +18,9 @@ export const signUp = async (req, res) => {
     },
   } = req
 
-  const existingUser = await UtilisateurModel.query().findOne({ email })
+  const existingutilisateur = await UtilisateurModel.query().findOne({ email })
 
-  if (existingUser) {
+  if (existingutilisateur) {
     res.send({})
     return
   }
@@ -49,26 +49,26 @@ export const signIn = async (req, res) => {
     body: { email, password },
   } = req
 
-  const user = await UtilisateurModel.query().findOne({ email })
+  const utilisateur = await UtilisateurModel.query().findOne({ email })
 
-  if (!user || !user.checkPassword(password)) {
-    res.status(401).send({ error: "Invalid credentials" })
+  if (!utilisateur || !utilisateur.checkPassword(password)) {
+    res.status(401).send({ error: "Email ou mot de passe invalide." })
     return
   }
   const jwt = jsonwebtoken.sign(
     {
       payload: {
-        user: {
-          id: user.id,
-          email: user.email,
-          prenom: user.prenom,
-          nom: user.nom,
-          dateNaissance: user.dateNaissance,
-          adresse: user.adresse,
-          ville: user.ville,
-          codePostal: user.codePostal,
-          pays: user.pays,
-          telephone: user.telephone,
+        utilisateur: {
+          id: utilisateur.id,
+          email: utilisateur.email,
+          prenom: utilisateur.prenom,
+          nom: utilisateur.nom,
+          dateNaissance: utilisateur.dateNaissance,
+          adresse: utilisateur.adresse,
+          ville: utilisateur.ville,
+          codePostal: utilisateur.codePostal,
+          pays: utilisateur.pays,
+          telephone: utilisateur.telephone,
         },
       },
     },

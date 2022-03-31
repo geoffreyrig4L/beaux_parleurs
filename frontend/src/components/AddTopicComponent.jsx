@@ -1,15 +1,18 @@
 import { Formik, Field } from "formik"
 import { useCallback, useContext } from "react"
+import api from "../services/api"
 import AppContext from "./AppContext"
 
 const AddTopicComponent = () => {
-  const { addTopic } = useContext(AppContext)
+  const { router, session } = useContext(AppContext)
+  const sessionId = JSON.parse(session).payload.user.userId
 
   const handleFormSubmit = useCallback(
     async ({ titre, contenu }) => {
-      return addTopic(titre, contenu)
+      await api.post(`/sujets/`, { titre, contenu })
+      router.reload()
     },
-    [addTopic]
+    [router, sessionId]
   )
 
   const textArea = () => {
@@ -24,7 +27,7 @@ const AddTopicComponent = () => {
         intialValues={{ titre: "", contenu: "" }}
         onSubmit={handleFormSubmit}
       >
-        {({ handleSubmit, isSubmitting, isValid }) => (
+        {({ handleSubmit }) => (
           <form
             className="flex flex-col m-auto w-[600px]"
             onSubmit={handleSubmit}
@@ -33,12 +36,16 @@ const AddTopicComponent = () => {
             <Field
               className="pl-[12px] mb-[10px] bg-gray-50 h-8"
               name="titre"
+              required
             />
             <label className="mr-[20px] mb-[6px] font-bold">
               Premier message :
             </label>
             <Field name="contenu" as={textArea} />
-            <button className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg">
+            <button
+              type="submit"
+              className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg"
+            >
               Publier
             </button>
           </form>

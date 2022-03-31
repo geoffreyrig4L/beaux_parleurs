@@ -16,7 +16,7 @@ const AuthentificationForm = () => {
         initialValues={{ email: "", password: "" }}
         onSubmit={handleFormSubmit}
       >
-        {({ handleSubmit, isSubmitting, isValid }) => (
+        {({ handleSubmit }) => (
           <form
             className="flex flex-col m-auto w-[600px]"
             onSubmit={handleSubmit}
@@ -26,6 +26,7 @@ const AuthentificationForm = () => {
               className="pl-[12px] mb-[10px] bg-gray-50 h-8"
               type="email"
               name="email"
+              required
             />
 
             <label className="mr-[20px] mb-[6px] font-bold">
@@ -35,10 +36,11 @@ const AuthentificationForm = () => {
               className="pl-[12px] mb-[10px] bg-gray-50 h-8"
               type="password"
               name="password"
+              required
             />
 
             <button
-              disabled={!isSubmitting && !isValid}
+              type="submit"
               className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg hover:bg-teal-600 hover:text-white"
             >
               Se connecter

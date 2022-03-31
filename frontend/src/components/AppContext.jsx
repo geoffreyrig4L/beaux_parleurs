@@ -9,9 +9,10 @@ export const AppContextProvider = (props) => {
 
   const initSession = useCallback((jwt) => {
     if (!jwt) {
+      setSession(null)
       return
     }
-    const [payload] = jwt.split(".")
+    const [, payload] = jwt.split(".")
     const session = atob(payload)
     setSession(session)
   }, [])
@@ -28,23 +29,35 @@ export const AppContextProvider = (props) => {
     }
   }, [session, router, Page.private])
 
-  const signIn = useCallback(async (email, password) => {
-    try {
-      const {
-        data: { jwt },
-      } = await api.post("/sign-in", { email, password })
-      localStorage.setItem("jwt", jwt)
-      initSession(jwt)
-      const {
-        query: { redirect },
-      } = router
-      if (redirect) {
-        router.push(decodeURIComponent(redirect))
+  const signIn = useCallback(
+    async (email, password) => {
+      try {
+        const {
+          data: { jwt },
+        } = await api.post("/sessions/sign-in", {
+          email,
+          password,
+        })
+        localStorage.setItem("jwt", jwt)
+        initSession(jwt)
+        const {
+          query: { redirect },
+        } = router
+        if (redirect) {
+          router.push(decodeURIComponent(redirect))
+        }
+      } catch (err) {
+        return { error: err }
       }
-    } catch (err) {
-      return { error: err }
-    }
-  }, [])
+    },
+    [initSession, router]
+  )
+
+  const signOut = () => {
+    localStorage.clear()
+    setSession(null)
+    router.push("/sign-in")
+  }
 
   const signUp = useCallback(
     async (
@@ -60,7 +73,7 @@ export const AppContextProvider = (props) => {
       password
     ) => {
       try {
-        await api.post("/sign-up", {
+        await api.post("/sessions/sign-up", {
           prenom,
           nom,
           adresse,
@@ -72,18 +85,23 @@ export const AppContextProvider = (props) => {
           email,
           password,
         })
-        router.push("/sign-in")
+        router.push("/sessions/sign-in")
       } catch (err) {
         return { error: err }
       }
-    }
+    },
+    [router]
   )
 
   if (!session && Page.private) {
     return null
   }
+
   return (
-    <AppContext.Provider {...otherProps} value={{ session, signIn, signUp }} />
+    <AppContext.Provider
+      {...otherProps}
+      value={{ router, session, signIn, signUp, signOut }}
+    />
   )
 }
 
