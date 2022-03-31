@@ -4,6 +4,6 @@ import { getUtilisateur } from "../controller/utilisateur.js"
 
 const router = express.Router()
 
-router.get("/:id", auth, getUtilisateur)
+router.get("/:utilisateurId", auth, getUtilisateur)
 
 export default router

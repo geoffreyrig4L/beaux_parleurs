@@ -42,7 +42,6 @@ export const getSujet = async (req, res) => {
     params: { sujetId },
   } = req
 
-  console.log(sujetId)
   const sujet = await SujetModel.query().findById(sujetId)
 
   if (!sujet) {
