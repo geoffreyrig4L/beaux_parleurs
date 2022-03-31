@@ -29,7 +29,7 @@ app.use(
 )
 
 app.use("/sessions", sessionRoutes)
-app.use("/sujet/:id/commentaires", commentaireRoutes)
+app.use("/commentaires", commentaireRoutes)
 app.use("/sujets", sujetRoutes)
 
 /*
