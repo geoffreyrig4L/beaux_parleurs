@@ -7,12 +7,18 @@ import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 
+const formatterDate = (date) => {
+  return (date = new Date(date).toLocaleString())
+}
+
 const CommentaireListe = ({ sujetId }) => {
   const [commentaires, setCommentaires] = useState([])
   const [like, setLike] = useState(false)
   const [apiError, setApiError] = useState(null)
 
-  //console.log(sujetId)
+  if (!sujetId) {
+    sujetId = 0
+  }
 
   useEffect(() => {
     api
@@ -23,34 +29,43 @@ const CommentaireListe = ({ sujetId }) => {
       )
   }, [sujetId])
 
-  //console.log(commentaires)
-
   return (
-    <div className="p-8 flex flex-row justify-between bg-gray-50 w-full rounded-lg">
-      <div className="max-w-[120px] text-center">
-        <span className="flex flex-col align-center">
-          <FontAwesomeIcon icon={faCircleUser} />
-        </span>
-        <p className="text-lg font-bold whitespace-pre">Name</p>
-      </div>
-      <p className="bg-gray-100 mx-5 p-5 flex-1 rounded-lg">Message</p>
-      <span>
-        {like ? (
-          <FontAwesomeIcon
-            icon={faHeartSolid}
-            className="text-2xl text-lg px-1 text-indigo-600"
-            onClick={() => setLike(!like)}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={faHeartRegular}
-            className="text-2xl text-lg px-1 text-indigo-600"
-            onClick={() => setLike(!like)}
-          />
-        )}
-      </span>
-      <p>3</p>
-    </div>
+    <ul>
+      {commentaires.map((commentaire) => (
+        <li key={commentaire.id} className=" mb-8">
+          <div className="p-4 flex flex-row justify-between bg-gray-50 w-full rounded-lg break-words">
+            <div className="flex flex-col justify-start text-center align-center w-[75px]">
+              <span className="text-xl mb-2">
+                <FontAwesomeIcon icon={faCircleUser} />
+              </span>
+              <p className="text-md text-indigo-600">{commentaire.auteur}</p>
+            </div>
+            <p className="bg-gray-100 mx-2 p-5 flex-1 rounded-lg w-[600px]">
+              {commentaire.contenu}
+            </p>
+            <span>
+              {like ? (
+                <FontAwesomeIcon
+                  icon={faHeartSolid}
+                  className="text-2xl text-lg px-1 text-indigo-600"
+                  onClick={() => setLike(!like)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faHeartRegular}
+                  className="text-2xl text-lg px-1 text-indigo-600"
+                  onClick={() => setLike(!like)}
+                />
+              )}
+            </span>
+            <p className="font-bold text-indigo-600">{commentaire.like}</p>
+          </div>
+          <p className="text-[0.6em] text-right">
+            {formatterDate(commentaire.dateCreation)}
+          </p>
+        </li>
+      ))}
+    </ul>
   )
 }
 

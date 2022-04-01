@@ -30,7 +30,7 @@ export const getSujets = async (req, res) => {
       "sujets.nom",
       "sujets.like",
       "sujets.dateCreation",
-      "utilisateurs.nom as auteur"
+      "utilisateurs.prenom as auteur"
     )
     .leftJoinRelated("utilisateurs")
     .orderBy("dateCreation", "desc")
@@ -67,9 +67,16 @@ export const getCommentairesDuSujet = async (req, res) => {
   }
 
   const commentaires = await CommentaireModel.query()
-    .select("commentaires.id", "commentaires.contenu", "commentaires.like")
+    .select(
+      "commentaires.id",
+      "commentaires.contenu",
+      "commentaires.like",
+      "commentaires.dateCreation",
+      "utilisateurs.prenom as auteur"
+    )
     .leftJoinRelated("sujets")
-    .where("sujets_id", { sujetId })
+    .leftJoinRelated("utilisateurs")
+    .where({ sujets_id: sujetId })
     .orderBy("commentaires.dateCreation", "desc")
 
   res.status(200).send(commentaires)

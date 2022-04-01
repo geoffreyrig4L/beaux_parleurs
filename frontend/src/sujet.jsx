@@ -12,8 +12,7 @@ const formatterDate = (date) => {
 const Sujet = ({ sujetId }) => {
   //const { session, router } = useContext(AppContext)
   const [sujet, setSujet] = useState([])
-  const [sujetError, setSujetError] = useState(null)
-  const [utilisateurError, setUtilisateurError] = useState(null)
+  const [apiError, setApiError] = useState(null)
   const [utilisateur, setUtilisateur] = useState([])
   const [operation, setOperation] = useState("+")
   const [addForm, setAddForm] = useState(false)
@@ -24,7 +23,7 @@ const Sujet = ({ sujetId }) => {
         .get(`/sujets/${sujetId}`)
         .then((response) => setSujet(response.data))
         .catch((error) =>
-          setSujetError(
+          setApiError(
             error.response ? error.response.data.error : error.message
           )
         )
@@ -37,7 +36,7 @@ const Sujet = ({ sujetId }) => {
         .get(`/utilisateurs/${utilisateurId}`)
         .then((response) => setUtilisateur(response.data))
         .catch((error) =>
-          setUtilisateurError(
+          setApiError(
             error.response ? error.response.data.error : error.message
           )
         )
@@ -50,18 +49,24 @@ const Sujet = ({ sujetId }) => {
 
   return (
     <div className="m-auto w-[1000px]">
-      <h1 className="font-bold text-2xl pl-16 text-left mb-16">
-        <span className="italic font-normal text-xl">Sujet : </span>
-        {sujet.nom}
-      </h1>
-      <p className="text-sm">
-        <span className="italic">Publié par : </span>
-        <span className="font-bold">{utilisateur.prenom}</span>
-      </p>
-      <p className="mb-16 text-sm">
-        <span className="italic">Le :</span>
-        <span className="font-bold"> {formatterDate(sujet.dateCreation)}</span>
-      </p>
+      <div className="flex flex-row justify-between">
+        <h1 className="font-bold text-2xl pl-16 text-left mb-16">
+          <span className="italic font-normal text-xl">Sujet : </span>
+          {sujet.nom}
+        </h1>
+        <span className="text-right">
+          <p className="text-sm">
+            <span>Publié par : </span>
+            <span className="font-bold">{utilisateur.prenom}</span>
+          </p>
+          <p className="mb-16 text-sm">
+            <span>Le : </span>
+            <span className="font-bold">
+              {formatterDate(sujet.dateCreation)}
+            </span>
+          </p>
+        </span>
+      </div>
       <CommentairesListe sujetId={sujetId} />
       <AddForm addForm={addForm} />
       <div
