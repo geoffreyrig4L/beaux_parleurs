@@ -18,7 +18,7 @@ const SujetsListe = () => {
 
   if (apiError) {
     return (
-      <h1 className="text-red-500 bg-red-100 rounded-md p-4">
+      <h1 className="text-red-500 text-center bg-red-100 rounded-md p-8">
         La récupération des sujets a échouée.
       </h1>
     )

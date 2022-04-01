@@ -1,4 +1,5 @@
 import SujetModel from "../models/sujet.js"
+import CommentaireModel from "../models/commentaire.js"
 
 export const createSujet = async (req, res) => {
   const {
@@ -50,4 +51,26 @@ export const getSujet = async (req, res) => {
   }
 
   res.status(200).send(sujet)
+}
+
+export const getCommentairesDuSujet = async (req, res) => {
+  const {
+    params: { sujetId },
+  } = req
+
+  const sujet = await SujetModel.query().findById(sujetId)
+
+  if (!sujet) {
+    res.status(404).send({ error: "Sujet introuvable." })
+
+    return
+  }
+
+  const commentaires = await CommentaireModel.query()
+    .select("commentaires.id", "commentaires.contenu", "commentaires.like")
+    .leftJoinRelated("sujets")
+    .where("sujets_id", { sujetId })
+    .orderBy("commentaires.dateCreation", "desc")
+
+  res.status(200).send(commentaires)
 }

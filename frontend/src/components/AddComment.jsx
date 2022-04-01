@@ -2,7 +2,12 @@ import { Formik, Field } from "formik"
 
 const AddForm = (props) => {
   function textArea() {
-    return <textarea className="pl-[12px] bg-gray-50 h-24 max-h-36" required />
+    return (
+      <textarea
+        className="pl-[12px] py-2 bg-gray-50 h-24 max-h-[250px] min-h-[100px]"
+        required
+      />
+    )
   }
 
   return props.addForm ? (

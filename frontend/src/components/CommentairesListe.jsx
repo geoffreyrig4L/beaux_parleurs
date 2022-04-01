@@ -3,11 +3,28 @@ import {
   faHeart as faHeartSolid,
   faCircleUser,
 } from "@fortawesome/free-solid-svg-icons"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import api from "../services/api"
 
-const CommentaireListe = () => {
+const CommentaireListe = ({ sujetId }) => {
+  const [commentaires, setCommentaires] = useState([])
   const [like, setLike] = useState(false)
+  const [apiError, setApiError] = useState(null)
+
+  //console.log(sujetId)
+
+  useEffect(() => {
+    api
+      .get(`/sujets/${sujetId}/commentaires`)
+      .then((response) => setCommentaires(response.data))
+      .catch((error) =>
+        setApiError(error.response ? error.response.data.error : error.message)
+      )
+  }, [sujetId])
+
+  //console.log(commentaires)
+
   return (
     <div className="p-8 flex flex-row justify-between bg-gray-50 w-full rounded-lg">
       <div className="max-w-[120px] text-center">

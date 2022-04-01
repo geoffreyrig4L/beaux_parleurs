@@ -76,8 +76,6 @@ export const deleteCommentaire = async (req, res) => {
     params: { commentaireId },
   } = req
 
-  console.log(commentaireId)
-
   const commentaire = await CommentaireModel.query().findById(commentaireId)
 
   if (!commentaire) {

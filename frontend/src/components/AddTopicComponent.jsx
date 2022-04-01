@@ -14,9 +14,6 @@ const AddTopicComponent = () => {
     },
     [router, sessionId]
   )
-
-  console.log(sessionId)
-
   const textArea = () => {
     return (
       <textarea className="mb-[10px] bg-gray-50 h-24 max-h-80 p-2" required />

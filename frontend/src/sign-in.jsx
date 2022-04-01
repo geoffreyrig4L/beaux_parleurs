@@ -22,11 +22,12 @@ const SignIn = () => {
     </div>
   ) : (
     <div>
-      <h1 className="font-bold text-xl text-center mb-8 pt-16">
-        Vous êtes déjà connecter sous le nom de {prenom}
+      <h1 className="text-xl text-center mb-8 pt-16">
+        Vous êtes déjà connecter sous le nom de :
+        <span className="text-indigo-600 font-bold"> {prenom}</span>
       </h1>
       <p className="text-center">
-        <a className="text-sky-600 underline" onClick={signOut}>
+        <a className="text-sky-600 underline text-xl" onClick={signOut}>
           Se déconnecter
         </a>
       </p>
