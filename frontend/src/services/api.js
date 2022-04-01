@@ -5,7 +5,6 @@ let jwt = null
 const getJWT = () => {
   jwt = jwt ?? localStorage.getItem("jwt")
 
-  console.log(jwt)
   return jwt
 }
 
@@ -14,7 +13,7 @@ const api = axios.create({
   //NEXT_PUBLIC_ evite de faire leaker des infos et est indispensable sinon le code ne fonctionne pas
   transformRequest: [
     (data, headers) => {
-      headers.authentication = getJWT()
+      headers.authentification = getJWT()
       headers.post["Content-Type"] = "application/json"
       headers.patch["Content-Type"] = "application/json"
       headers.put["Content-Type"] = "application/json"

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import api from "../services/api"
 
 const SujetsListe = () => {
-  const [sujets, setSujets] = useState(null)
+  const [sujets, setSujets] = useState([])
   const [apiError, setApiError] = useState(null)
 
   useEffect(() => {
@@ -14,10 +14,7 @@ const SujetsListe = () => {
       .catch((error) =>
         setApiError(error.response ? error.response.data.error : error.message)
       )
-  })
-
-  console.log(apiError)
-  console.log(sujets)
+  }, [])
 
   if (apiError) {
     return (
@@ -33,7 +30,7 @@ const SujetsListe = () => {
         <li key={sujet.id}>
           <a href={`/sujets/${encodeURIComponent(sujet.id)}`}>
             <div className=" flex flex-row justify-between bg-gray-50 w-full font-bold text-2xl p-4 pb-16 rounded-lg">
-              <span>{sujet.titre}</span>
+              <span>{sujet.nom}</span>
               <span>
                 <FontAwesomeIcon
                   icon={faHeart}

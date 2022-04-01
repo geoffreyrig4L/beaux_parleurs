@@ -5,7 +5,7 @@ import { getSujets, getSujet, createSujet } from "../controller/sujet.js"
 
 const router = express.Router()
 
-router.get("/", auth, getSujets)
+router.get("/", getSujets)
 router.post("/", auth, createSujet)
 router.get("/:sujetId", auth, getSujet)
 

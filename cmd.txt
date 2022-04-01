@@ -18,7 +18,7 @@ POST sujet :
 curl -X POST localhost:3001/sujets/ -H 'Content-Type:application/json' -H 'authentification: {token}' -d  '{"nom":"Comment faire une blanquette ?","like":4,"utilisateurs_id":1}'
 
 GET all sujets :
-curl localhost:3001/sujets -H "authentification : {token} "
+curl localhost:3001/sujets -H
 
 GET sujet : 
 curl localhost:3001/sujets/1 -H "authentification : {token} "

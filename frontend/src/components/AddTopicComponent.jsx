@@ -5,7 +5,7 @@ import AppContext from "./AppContext"
 
 const AddTopicComponent = () => {
   const { router, session } = useContext(AppContext)
-  const sessionId = JSON.parse(session).payload.user.userId
+  const sessionId = JSON.parse(session).payload.utilisateur.id
 
   const handleFormSubmit = useCallback(
     async ({ titre, contenu }) => {
@@ -14,6 +14,8 @@ const AddTopicComponent = () => {
     },
     [router, sessionId]
   )
+
+  console.log(sessionId)
 
   const textArea = () => {
     return (

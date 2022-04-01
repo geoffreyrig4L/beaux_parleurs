@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import AddForm from "./components/AddComment"
 
-const Sujet = () => {
+const Sujet = ({ sujetId }) => {
   const [operation, setOperation] = useState("+")
   const [addForm, setAddForm] = useState(false)
+
+  console.log(sujetId)
 
   function plusOrMinus() {
     return operation === "+" ? setOperation("-") : setOperation("+")

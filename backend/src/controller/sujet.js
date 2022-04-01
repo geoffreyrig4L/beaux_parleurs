@@ -34,7 +34,7 @@ export const getSujets = async (req, res) => {
     .leftJoinRelated("utilisateurs")
     .orderBy("dateCreation", "desc")
 
-  res.status(200).send({ sujets })
+  res.status(200).send(sujets)
 }
 
 export const getSujet = async (req, res) => {

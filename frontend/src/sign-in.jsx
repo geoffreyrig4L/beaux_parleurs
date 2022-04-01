@@ -4,9 +4,10 @@ import { useContext } from "react"
 
 const SignIn = () => {
   const { session, signOut } = useContext(AppContext)
-  //const prenom = JSON.parse(session).payload.utilisateur.prenom
-
-  const prenom = ""
+  let prenom = ""
+  if (session) {
+    prenom = JSON.parse(session).payload.utilisateur.prenom
+  }
 
   return !session ? (
     <div>
