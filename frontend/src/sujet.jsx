@@ -2,7 +2,7 @@ import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons"
 import CommentairesListe from "./components/CommentairesListe"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
-import AddForm from "./components/AddComment"
+import AddComment from "./components/AddComment"
 import api from "./services/api"
 
 const formatterDate = (date) => {
@@ -15,7 +15,7 @@ const Sujet = ({ sujetId }) => {
   const [apiError, setApiError] = useState(null)
   const [utilisateur, setUtilisateur] = useState([])
   const [operation, setOperation] = useState("+")
-  const [addForm, setAddForm] = useState(false)
+  const [addComment, setAddComment] = useState(false)
 
   useEffect(() => {
     if (sujetId && !isNaN(sujetId)) {
@@ -68,11 +68,11 @@ const Sujet = ({ sujetId }) => {
         </span>
       </div>
       <CommentairesListe sujetId={sujetId} />
-      <AddForm addForm={addForm} />
+      <AddComment addComment={addComment} titre="Votre nouveau commentaire :" />
       <div
         className="text-center w-full bg-teal-500 rounded-lg hover:shadow-md  mb-[150px]"
         onClick={() => (
-          (addForm = setAddForm(!addForm)), setOperation(plusOrMinus)
+          (addComment = setAddComment(!addComment)), setOperation(plusOrMinus)
         )}
       >
         {operation === "+" ? (

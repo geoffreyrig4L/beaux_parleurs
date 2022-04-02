@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 import AppContext from "./AppContext"
 import { useContext } from "react"
+import Link from "next/link"
 
-const ModifyOrUpdate = ({ commentaire, modify }) => {
+const ModifyOrUpdate = ({ commentaire }) => {
   const { session } = useContext(AppContext)
 
   let id = ""
@@ -34,15 +35,16 @@ const ModifyOrUpdate = ({ commentaire, modify }) => {
             onClick={() => deleteCommentaire()}
           />
         </button>
-        <button>
-          <FontAwesomeIcon
-            icon={faPen}
-            className="text-[11px] hover:text-indigo-400"
-            onClick={() => {
-              modify = !modify
-            }}
-          />
-        </button>
+        <Link href="/modifierSonCommentaire">
+          <a>
+            <button>
+              <FontAwesomeIcon
+                icon={faPen}
+                className="text-[11px] hover:text-indigo-400"
+              />
+            </button>
+          </a>
+        </Link>
       </div>
     )
   return ""
