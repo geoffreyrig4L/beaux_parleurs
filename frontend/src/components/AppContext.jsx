@@ -23,12 +23,6 @@ export const AppContextProvider = (props) => {
     initSession(jwt)
   }, [initSession])
 
-  /*useEffect(() => {
-    if (!session && Page.private) {
-      router.push(`/?redirect=${encodeURIComponent(location.pathname)}`)
-    }
-  }, [session, router, Page.private])*/
-
   const signIn = useCallback(
     async (email, password) => {
       try {
@@ -40,12 +34,6 @@ export const AppContextProvider = (props) => {
         })
         localStorage.setItem("jwt", jwt)
         initSession(jwt)
-        /*const {
-          query: { redirect },
-        } = router
-        if (redirect) {
-          router.push(decodeURIComponent(redirect))
-        }*/
       } catch (err) {
         return { error: err }
       }

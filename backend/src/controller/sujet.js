@@ -71,6 +71,7 @@ export const getCommentairesDuSujet = async (req, res) => {
       "commentaires.id",
       "commentaires.contenu",
       "commentaires.like",
+      "utilisateurs.id as utilisateurs_id",
       "commentaires.dateCreation",
       "utilisateurs.prenom as auteur"
     )
