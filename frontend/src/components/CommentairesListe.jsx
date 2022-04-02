@@ -7,7 +7,6 @@ import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 import ModifyOrUpdate from "./ModifyOrUpdate"
-import AddComment from "./AddComment"
 
 const formatterDate = (date) => {
   return (date = new Date(date).toLocaleString())
@@ -44,7 +43,9 @@ const CommentaireListe = ({ sujetId }) => {
                 <span className="text-xl mb-2">
                   <FontAwesomeIcon icon={faCircleUser} />
                 </span>
-                <p className="text-md text-indigo-600">{commentaire.auteur}</p>
+                <p className="text-md text-indigo-600 font-medium">
+                  {commentaire.auteur}
+                </p>
               </div>
               <p className="bg-gray-100 mx-2 p-5 flex-1 rounded-lg w-[600px]">
                 {commentaire.contenu}

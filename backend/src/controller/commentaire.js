@@ -85,3 +85,17 @@ export const deleteCommentaire = async (req, res) => {
   await CommentaireModel.query().delete().where({ id: commentaireId })
   res.status(200).send({ status: "Commentaire supprimé." })
 }
+
+export const getCommentaire = async (req, res) => {
+  const {
+    params: { commentaireId },
+  } = req
+
+  const commentaire = await CommentaireModel.query().findById(commentaireId)
+
+  if (!commentaire) {
+    res.status(400).send({ error: "Commentaire introuvable." })
+    return
+  }
+  res.status(200).send(commentaire)
+}

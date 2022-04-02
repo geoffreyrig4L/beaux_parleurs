@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 import AppContext from "./AppContext"
 import { useContext } from "react"
-import Link from "next/link"
 
 const ModifyOrUpdate = ({ commentaire }) => {
   const { session } = useContext(AppContext)
@@ -35,27 +34,18 @@ const ModifyOrUpdate = ({ commentaire }) => {
             onClick={() => deleteCommentaire()}
           />
         </button>
-        <Link href="/modifierSonCommentaire">
-          <a>
-            <button>
-              <FontAwesomeIcon
-                icon={faPen}
-                className="text-[11px] hover:text-indigo-400"
-              />
-            </button>
-          </a>
-        </Link>
+
+        <a href={`/commentaires/${encodeURIComponent(commentaire.id)}`}>
+          <button>
+            <FontAwesomeIcon
+              icon={faPen}
+              className="text-[11px] hover:text-indigo-400"
+            />
+          </button>
+        </a>
       </div>
     )
   return ""
 }
 
 export default ModifyOrUpdate
-
-/*    api
-      .put(`/commentaires/${commentaire.id}`)
-      .then((response) => console.log(response))
-      .catch((error) =>
-        setApiError(error.response ? error.response.data.error : error.message)
-      )
-    location.reload()*/

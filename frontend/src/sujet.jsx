@@ -10,7 +10,6 @@ const formatterDate = (date) => {
 }
 
 const Sujet = ({ sujetId }) => {
-  //const { session, router } = useContext(AppContext)
   const [sujet, setSujet] = useState([])
   const [apiError, setApiError] = useState(null)
   const [utilisateur, setUtilisateur] = useState([])
@@ -68,7 +67,13 @@ const Sujet = ({ sujetId }) => {
         </span>
       </div>
       <CommentairesListe sujetId={sujetId} />
-      <AddComment addComment={addComment} titre="Votre nouveau commentaire :" />
+      <AddComment
+        addComment={addComment}
+        titre="Votre nouveau commentaire :"
+        action="creer"
+        commentaire={{}}
+        sujetId={sujet.id}
+      />
       <div
         className="text-center w-full bg-teal-500 rounded-lg hover:shadow-md  mb-[150px]"
         onClick={() => (
