@@ -10,9 +10,9 @@ import {
 
 const router = express.Router()
 
-router.get("/", auth, getSujets)
+router.get("/", getSujets)
 router.post("/", auth, createSujet)
-router.get("/:sujetId", auth, getSujet)
-router.get("/:sujetId/commentaires", auth, getCommentairesDuSujet)
+router.get("/:sujetId", getSujet)
+router.get("/:sujetId/commentaires", getCommentairesDuSujet)
 
 export default router

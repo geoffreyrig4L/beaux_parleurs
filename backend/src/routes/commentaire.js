@@ -12,10 +12,10 @@ const router = express.Router()
 
 //commentaires?trierPar=:trieur&sens=:sens/
 
-router.get("/", auth, getCommentaires)
+router.get("/", getCommentaires)
 router.put("/:commentaireId", auth, modifyCommentaire)
 router.post("/", auth, createCommentaire)
 router.delete("/:commentaireId", auth, deleteCommentaire)
-router.get("/:commentaireId", auth, getCommentaire)
+router.get("/:commentaireId", getCommentaire)
 
 export default router

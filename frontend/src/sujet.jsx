@@ -1,9 +1,10 @@
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons"
 import CommentairesListe from "./components/CommentairesListe"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import AddComment from "./components/AddComment"
 import api from "./services/api"
+import AppContext from "./components/AppContext"
 
 const formatterDate = (date) => {
   return (date = new Date(date).toLocaleString())
@@ -11,6 +12,7 @@ const formatterDate = (date) => {
 
 const Sujet = ({ sujetId }) => {
   const [sujet, setSujet] = useState([])
+  const [session] = useContext(AppContext)
   const [apiError, setApiError] = useState(null)
   const [utilisateur, setUtilisateur] = useState([])
   const [operation, setOperation] = useState("+")
@@ -46,6 +48,36 @@ const Sujet = ({ sujetId }) => {
     return operation === "+" ? setOperation("-") : setOperation("+")
   }
 
+  function formAddComment() {
+    return session ? (
+      <div>
+        <AddComment
+          addComment={addComment}
+          titre="Votre nouveau commentaire :"
+          action="creer"
+          commentaire={{}}
+          sujetId={sujet.id}
+        />
+        <div
+          className="text-center w-full bg-teal-500 rounded-lg hover:shadow-md  mb-[150px]"
+          onClick={() => (
+            (addComment = setAddComment(!addComment)), setOperation(plusOrMinus)
+          )}
+        >
+          {operation === "+" ? (
+            <FontAwesomeIcon icon={faPlus} className="text-white h-6 py-2" />
+          ) : (
+            <FontAwesomeIcon icon={faMinus} className="text-white h-6 py-2" />
+          )}
+        </div>
+      </div>
+    ) : (
+      <h1 className="text-red-500 bg-red-100 p-6 rounded-sm mt-[55px] mb-[100px] font-bold">
+        Connectez-vous pour ajouter un commentaire.
+      </h1>
+    )
+  }
+
   return (
     <div className="m-auto w-[1000px]">
       <div className="flex flex-row justify-between">
@@ -67,25 +99,7 @@ const Sujet = ({ sujetId }) => {
         </span>
       </div>
       <CommentairesListe sujetId={sujetId} />
-      <AddComment
-        addComment={addComment}
-        titre="Votre nouveau commentaire :"
-        action="creer"
-        commentaire={{}}
-        sujetId={sujet.id}
-      />
-      <div
-        className="text-center w-full bg-teal-500 rounded-lg hover:shadow-md  mb-[150px]"
-        onClick={() => (
-          (addComment = setAddComment(!addComment)), setOperation(plusOrMinus)
-        )}
-      >
-        {operation === "+" ? (
-          <FontAwesomeIcon icon={faPlus} className="text-white h-6 py-2" />
-        ) : (
-          <FontAwesomeIcon icon={faMinus} className="text-white h-6 py-2" />
-        )}
-      </div>
+      {formAddComment()}
     </div>
   )
 }
