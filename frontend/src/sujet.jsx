@@ -12,7 +12,7 @@ const formatterDate = (date) => {
 
 const Sujet = ({ sujetId }) => {
   const [sujet, setSujet] = useState([])
-  const [session] = useContext(AppContext)
+  const { session } = useContext(AppContext)
   const [apiError, setApiError] = useState(null)
   const [utilisateur, setUtilisateur] = useState([])
   const [operation, setOperation] = useState("+")
@@ -72,7 +72,7 @@ const Sujet = ({ sujetId }) => {
         </div>
       </div>
     ) : (
-      <h1 className="text-red-500 bg-red-100 p-6 rounded-sm mt-[55px] mb-[100px] font-bold">
+      <h1 className="text-red-500 bg-red-100 p-6 rounded-sm mt-[55px] mb-[100px]">
         Connectez-vous pour ajouter un commentaire.
       </h1>
     )

@@ -61,7 +61,6 @@ export const AppContextProvider = (props) => {
       password
     ) => {
       try {
-        dateNaissanceFormatted = new Date(dateNaissance).toLocaleString()
         const dateCreation = ""
         await api.post("/sessions/sign-up", {
           prenom,
@@ -70,12 +69,14 @@ export const AppContextProvider = (props) => {
           ville,
           pays,
           codePostal,
-          dateNaissanceFormatted,
+          dateNaissance,
           telephone,
           email,
           password,
           dateCreation,
         })
+        signIn(email, password)
+        router.push("/sign-in")
       } catch (err) {
         return { error: err }
       }

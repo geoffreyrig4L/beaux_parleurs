@@ -37,15 +37,15 @@ const SignUpForm = () => {
   let cssChamp = "pl-[12px] mb-[10px] bg-gray-50 h-8 w-[300px]"
   let cssLabel = "mr-[20px] mb-[6px] font-bold"
 
-  function codePostal() {
+  const codePostal = () => {
     return <input maxLength={5} type="number" required className={cssChamp} />
   }
 
-  function dateNaissance() {
+  const dateNaissance = () => {
     return <input type="date" required className={cssChamp} />
   }
 
-  function telephone() {
+  const telephone = () => {
     return <input maxLength={10} type="number" required className={cssChamp} />
   }
 
@@ -59,14 +59,14 @@ const SignUpForm = () => {
           ville: "",
           pays: "",
           codePostal: "",
-          dateNaissance: "",
+          dateNaissance: new Date(),
           telephone: "",
           email: "",
           password: "",
         }}
         onSubmit={handleFormSubmit}
       >
-        {({ handleSubmit, isSubmitting, isValid }) => (
+        {({ handleSubmit }) => (
           <form className="m-auto w-[700px] mb-24" onSubmit={handleSubmit}>
             <div className="flex flex-row justify-between">
               <span className="flex flex-col">
@@ -83,12 +83,16 @@ const SignUpForm = () => {
               </span>
               <span className="flex flex-col">
                 <label className={cssLabel}>Code postal :</label>
-                <Field as={codePostal} name="codePostal" />
+                <Field className={cssChamp} name="codePostal" />
                 <label className={cssLabel}>Date de naissance :</label>
-                <Field as={dateNaissance} name="dateNaissance" />
+                <Field
+                  className={cssChamp}
+                  as={dateNaissance}
+                  name="dateNaissance"
+                />
 
                 <label className={cssLabel}>Téléphone :</label>
-                <Field as={telephone} name="telephone" />
+                <Field className={cssChamp} name="telephone" />
 
                 <label className={cssLabel}>Email :</label>
                 <Field className={cssChamp} type="email" name="email" />
@@ -99,7 +103,7 @@ const SignUpForm = () => {
             </div>
             <div className="w-full mt-12 text-center">
               <button
-                disabled={!isSubmitting && !isValid}
+                type="submit"
                 className="bg-gray-100 w-[200px] h-8 rounded-lg hover:bg-teal-600 hover:text-white"
               >
                 S'inscrire

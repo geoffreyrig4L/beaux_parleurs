@@ -19,9 +19,9 @@ export const signUp = async (req, res) => {
     },
   } = req
 
-  const existingutilisateur = await UtilisateurModel.query().findOne({ email })
+  const existingUtilisateur = await UtilisateurModel.query().findOne({ email })
 
-  if (existingutilisateur) {
+  if (existingUtilisateur) {
     res.send({})
     return
   }

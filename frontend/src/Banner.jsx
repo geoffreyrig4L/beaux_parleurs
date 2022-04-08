@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons"
-import { useState } from "react"
 
 const Banner = () => {
   return (

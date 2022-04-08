@@ -1,8 +1,15 @@
 import express from "express"
-import { getUtilisateur } from "../controller/utilisateur.js"
+import auth from "../middleware/auth.js"
+import {
+  getUtilisateur,
+  getUtilisateurs,
+  deleteUtilisateur,
+} from "../controller/utilisateur.js"
 
 const router = express.Router()
 
-router.get("/:utilisateurId", getUtilisateur)
+router.get("/:utilisateurId", auth, getUtilisateur)
+router.get("/", auth, getUtilisateurs)
+router.delete("/:utilisateurId", auth, deleteUtilisateur)
 
 export default router
