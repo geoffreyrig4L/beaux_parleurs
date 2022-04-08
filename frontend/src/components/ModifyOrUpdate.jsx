@@ -22,8 +22,6 @@ const ModifyOrUpdate = ({ commentaire }) => {
     location.reload()
   }
 
-  console.log({ commentaire })
-
   if (id == commentaire.utilisateurs_id)
     return (
       <div className="flex flex-row justify-end mb-1">

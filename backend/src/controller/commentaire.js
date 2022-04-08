@@ -2,7 +2,7 @@ import CommentaireModel from "../models/commentaire.js"
 
 export const createCommentaire = async (req, res) => {
   const {
-    body: { contenu, like, sujets_id, utilisateurs_id, dateCreation },
+    body: { contenu, like, dateCreation, utilisateurs_id, sujets_id },
   } = req
 
   const commentaire = await CommentaireModel.query().findOne({ contenu })

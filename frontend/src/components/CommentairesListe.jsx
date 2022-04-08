@@ -51,17 +51,15 @@ const CommentaireListe = ({ sujetId }) => {
                 {commentaire.contenu}
               </p>
               <span>
-                {like ? (
+                {!like ? (
                   <FontAwesomeIcon
                     icon={faHeartSolid}
                     className="text-2xl text-lg px-1 text-indigo-600"
-                    onClick={() => setLike(!like)}
                   />
                 ) : (
                   <FontAwesomeIcon
                     icon={faHeartRegular}
                     className="text-2xl text-lg px-1 text-indigo-600"
-                    onClick={() => setLike(!like)}
                   />
                 )}
               </span>

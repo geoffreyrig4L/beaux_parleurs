@@ -1,43 +1,50 @@
 import AppContext from "./AppContext"
-import { useContext } from "react"
+import { useCallback, useContext, useState } from "react"
 import api from "../services/api"
+import { FormField, Formik, Form } from "formik"
 
-const AddComment = (props) => {
-  const { session } = useContext(AppContext)
+const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
+  const [session, router] = useContext(AppContext)
+  const [apiError, setApiError] = useState(null)
 
-  let id = ""
+  let idUtilisateur = ""
   if (session) {
-    id = JSON.parse(session).payload.utilisateur.id
+    idUtilisateur = JSON.parse(session).payload.utilisateur.id
   }
 
-  function publier() {
-    const contenu = document.getElementById("contenuCommentaire").value
-    const like = 0
-    const sujetId = props.sujetId
-    if (props.action === "creer") {
-      api.post("/commentaires", {
-        contenu,
-        like,
-        sujetId,
-        id,
-      })
-    } else if (props.action === "modifier") {
-      api.put("/commentaires", {
-        contenu,
-      })
-    }
-  }
+  const publier = useCallback(
+    async ({ contenu }) => {
+      try {
+        const like = 0
+        const dateCreation = ""
+        if (action === "creer") {
+          await api.post("/commentaires", {
+            contenu,
+            like,
+            dateCreation,
+            idUtilisateur,
+            sujetId,
+          })
+          router.push("/")
+        }
+      } catch (err) {
+        setApiError(err.response.data.error)
+        console.log(apiError)
+      }
+    },
+    [router, idUtilisateur, sujetId, action, apiError]
+  )
 
-  return props.addComment ? (
+  return addComment ? (
     <div className="mt-8">
       <form className="flex flex-col mb-6">
-        <label className="mr-[20px] font-bold">{props.titre}</label>
+        <label className="mr-[20px] font-bold">{titre}</label>
         <textArea
           id="contenuCommentaire"
           className="pl-[12px] py-2 bg-gray-50 h-24 max-h-[250px] min-h-[100px]"
           required
         >
-          {props.commentaire.contenu}
+          {commentaire.contenu}
         </textArea>
         <button
           className="bg-gray-100 w-full h-8 hover:bg-teal-600 hover:text-white"

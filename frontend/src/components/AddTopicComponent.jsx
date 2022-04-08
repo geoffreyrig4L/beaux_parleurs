@@ -1,19 +1,34 @@
 import { Formik, Field } from "formik"
-import { useCallback, useContext } from "react"
+import { useCallback, useContext, useState } from "react"
 import api from "../services/api"
 import AppContext from "./AppContext"
 
 const AddTopicComponent = () => {
   const { router, session } = useContext(AppContext)
-  const sessionId = JSON.parse(session).payload.utilisateur.id
+  const [sujet, setSujet] = useState([])
+
+  let sessionId
+  if (session) {
+    sessionId = JSON.parse(session).payload.utilisateur.id
+  }
 
   const handleFormSubmit = useCallback(
     async ({ titre, contenu }) => {
-      await api.post(`/sujets/`, { titre, contenu })
-      router.reload()
+      const like = 0
+      const dateCreation = ""
+      await api.post("/sujets", { titre, like, sessionId, dateCreation })
+
+      await api.post("/commentaires", {
+        contenu,
+        like,
+        sessionId,
+        dateCreation,
+      })
+      router.push("/")
     },
     [router, sessionId]
   )
+
   const textArea = () => {
     return (
       <textarea className="mb-[10px] bg-gray-50 h-24 max-h-80 p-2" required />

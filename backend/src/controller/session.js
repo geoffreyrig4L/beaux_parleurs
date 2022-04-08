@@ -15,6 +15,7 @@ export const signUp = async (req, res) => {
       codePostal,
       pays,
       telephone,
+      dateCreation,
     },
   } = req
 
@@ -39,6 +40,7 @@ export const signUp = async (req, res) => {
     codePostal,
     pays,
     telephone,
+    dateCreation,
   })
 
   res.send({})
