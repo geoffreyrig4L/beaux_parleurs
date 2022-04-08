@@ -15,6 +15,6 @@ router.get("/", getSujets)
 router.post("/", auth, createSujet)
 router.get("/:sujetId", getSujet)
 router.get("/:sujetId/commentaires", getCommentairesDuSujet)
-router.post("/:sujetId/commentaires", auth, createCommentaireInSujet)
+router.post("/:sujetIdParams/commentaires", auth, createCommentaireInSujet)
 
 export default router

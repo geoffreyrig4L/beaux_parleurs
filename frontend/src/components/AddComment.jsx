@@ -18,11 +18,10 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
     async ({ contenu }) => {
       const like = 0
       const dateCreation = ""
-      const sujet = parseInt(sujetId)
       try {
         if (action === "creer") {
           console.log("1 " + action)
-          await api.post(`/sujets/${sujet}/commentaires`, {
+          await api.post(`/sujets/${parseInt(sujetId)}/commentaires`, {
             contenu,
             like,
             dateCreation,

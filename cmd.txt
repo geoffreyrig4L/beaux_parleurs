@@ -22,3 +22,7 @@ curl localhost:3001/sujets -H
 
 GET sujet : 
 curl localhost:3001/sujets/1 -H "authentification : {token} "
+
+
+
+curl -X POST localhost:3001/sujets/2/commentaires -H 'Content-Type:application/json' -H 'authentification: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InV0aWxpc2F0ZXVyIjp7ImlkIjoxLCJlbWFpbCI6ImFydGh1ckBnbWFpbC5jb20iLCJwcmVub20iOiJBcnRodXIiLCJub20iOiJHZXJtYWluIiwiZGF0ZU5haXNzYW5jZSI6IjIwMDAtMDYtMTNUMjI6MDA6MDAuMDAwWiIsImFkcmVzc2UiOiIzMiBydWUgZGVzIGJvdWxhbmdlcnMiLCJ2aWxsZSI6Ik5hbnRlcnJlIiwiY29kZVBvc3RhbCI6IjkyMDAwIiwicGF5cyI6IkZyYW5jZSIsInRlbGVwaG9uZSI6IjA2MjM3ODY1NDQifX0sImlhdCI6MTY0OTQxNzgwOCwiZXhwIjoxNjQ5NTkwNjA4fQ.p4G02MkbPCPMZ0FLf4dntD2p0dMMulo0udPLa0XpqNk' -d  '{"contenu": "petasse","like": 0,"dateCreation": "8====D","utilisateurs_id": 1,"sujets_id": 2}'
