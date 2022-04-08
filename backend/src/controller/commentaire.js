@@ -44,7 +44,7 @@ export const getCommentaires = async (req, res) => {
       "commentaires.contenu",
       "commentaires.like",
       "commentaires.dateCreation",
-      "utilisateurs.nom as auteur",
+      "utilisateurs.prenom as auteur",
       "sujets.nom as nom_sujet"
     )
     .leftJoinRelated("[utilisateurs,sujets]")
