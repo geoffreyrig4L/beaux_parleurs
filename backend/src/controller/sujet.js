@@ -82,3 +82,27 @@ export const getCommentairesDuSujet = async (req, res) => {
 
   res.status(200).send(commentaires)
 }
+
+export const createCommentaireInSujet = async (req, res) => {
+  const {
+    params: { sujetId },
+    body: { contenu, like, dateCreation, utilisateurs_id, sujets_id },
+  } = req
+
+  const sujet = await SujetModel.query().findById({ sujetId })
+
+  if (sujet) {
+    res.status(400).send("Sujet du commentaire introuvable.")
+    return
+  }
+
+  await CommentaireModel.query().insert({
+    contenu,
+    like,
+    dateCreation,
+    utilisateurs_id,
+    sujets_id,
+  })
+
+  res.status(200).send({ status: "Commentaire créé." })
+}

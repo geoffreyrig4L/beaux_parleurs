@@ -18,16 +18,16 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
     async ({ contenu }) => {
       const like = 0
       const dateCreation = ""
-
+      const sujet = parseInt(sujetId)
       try {
         if (action === "creer") {
           console.log("1 " + action)
-          await api.post("/commentaires", {
+          await api.post(`/sujets/${sujet}/commentaires`, {
             contenu,
             like,
             dateCreation,
             utilisateur,
-            sujetId,
+            sujet,
           })
         } else if (action === "modifier") {
           console.log("2 " + action)
