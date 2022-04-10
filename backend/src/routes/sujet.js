@@ -7,14 +7,18 @@ import {
   createSujet,
   getCommentairesDuSujet,
   createCommentaireInSujet,
+  getSujetByNom,
+  deleteSujet,
 } from "../controller/sujet.js"
 
 const router = express.Router()
 
 router.get("/", getSujets)
 router.post("/", auth, createSujet)
-router.get("/:sujetId", getSujet)
+router.get("/nom=:sujetNom", getSujetByNom)
+router.get("/id=:sujetId", getSujet)
 router.get("/:sujetId/commentaires", getCommentairesDuSujet)
-router.post("/:sujetIdParams/commentaires", auth, createCommentaireInSujet)
+router.post("/:sujetId/commentaires", auth, createCommentaireInSujet)
+router.delete("/:sujetId", auth, deleteSujet)
 
 export default router

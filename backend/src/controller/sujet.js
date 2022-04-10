@@ -9,7 +9,7 @@ export const createSujet = async (req, res) => {
   const sujet = await SujetModel.query().findOne({ nom })
 
   if (sujet) {
-    res.status(400).send("Ce sujet existe déjà.")
+    res.status(200).send("Le sujet existe déjà.")
     return
   }
 
@@ -85,18 +85,16 @@ export const getCommentairesDuSujet = async (req, res) => {
 
 export const createCommentaireInSujet = async (req, res) => {
   const {
-    params: { sujetIdParams },
+    params: { sujetId },
     body: { contenu, like, dateCreation, utilisateurs_id, sujets_id },
   } = req
 
-  const sujet = await SujetModel.query().findById({ sujetIdParams })
+  const sujet = await SujetModel.query().findById(sujetId)
 
   if (sujet) {
-    res.status(400).send("Sujet du commentaire introuvable.")
+    res.status(404).send("Sujet du commentaire introuvable.")
     return
   }
-
-  console.log(sujet)
 
   await CommentaireModel.query().insert({
     contenu,
@@ -107,4 +105,34 @@ export const createCommentaireInSujet = async (req, res) => {
   })
 
   res.status(200).send({ status: "Commentaire créé." })
+}
+
+export const getSujetByNom = async (req, res) => {
+  const {
+    params: { sujetNom },
+  } = req
+
+  const sujet = await SujetModel.query().findOne({ nom: sujetNom })
+  if (!sujet) {
+    res.status(404).send("Sujet introuvable.")
+    return
+  }
+
+  res.status(200).send(sujet)
+}
+
+export const deleteSujet = async (req, res) => {
+  const {
+    params: { sujetId },
+  } = req
+
+  const sujet = await SujetModel.query().findById(sujetId)
+
+  if (!sujet) {
+    res.status(404).send({ error: "Sujet introuvable." })
+    return
+  }
+
+  await SujetModel.query().delete().where({ id: sujetId })
+  res.status(200).send({ status: "Sujet supprimé." })
 }

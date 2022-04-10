@@ -1,6 +1,6 @@
 export const up = async (knex) => {
   await knex.schema.createTable("utilisateurs", (table) => {
-    table.increments("id")
+    table.increments().unique()
     table.text("prenom").notNullable()
     table.text("nom").notNullable()
     table.text("email").notNullable().unique()
@@ -15,7 +15,7 @@ export const up = async (knex) => {
     table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("sujets", (table) => {
-    table.increments("id")
+    table.increments().unique()
     table.text("nom").notNullable()
     table.integer("like")
     table.integer("utilisateurs_id").notNullable()
@@ -27,7 +27,7 @@ export const up = async (knex) => {
     table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("commentaires", (table) => {
-    table.increments("id")
+    table.increments().unique()
     table.text("contenu").notNullable()
     table.integer("like")
     table.integer("sujets_id").notNullable()
