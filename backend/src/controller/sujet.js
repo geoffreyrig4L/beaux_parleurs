@@ -91,7 +91,7 @@ export const createCommentaireInSujet = async (req, res) => {
 
   const sujet = await SujetModel.query().findById(sujetId)
 
-  if (sujet) {
+  if (!sujet) {
     res.status(404).send("Sujet du commentaire introuvable.")
     return
   }
