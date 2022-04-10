@@ -78,7 +78,7 @@ export const getCommentairesDuSujet = async (req, res) => {
     .leftJoinRelated("sujets")
     .leftJoinRelated("utilisateurs")
     .where({ sujets_id: sujetId })
-    .orderBy("commentaires.dateCreation", "desc")
+    .orderBy("commentaires.dateCreation", "asc")
 
   res.status(200).send(commentaires)
 }
@@ -135,4 +135,36 @@ export const deleteSujet = async (req, res) => {
 
   await SujetModel.query().delete().where({ id: sujetId })
   res.status(200).send({ status: "Sujet supprimé." })
+}
+
+export const createSujetPlusComment = async (req, res) => {
+  const {
+    body: { nom, like, utilisateurs_id, dateCreation, contenu },
+  } = req
+
+  const sujet = await SujetModel.query().findOne({ nom })
+
+  if (sujet) {
+    res.status(200).send("Le sujet existe déjà.")
+    return
+  }
+
+  await SujetModel.query().insert({
+    nom,
+    like,
+    utilisateurs_id: utilisateurs_id,
+    dateCreation,
+  })
+
+  const sujetToSupply = await SujetModel.query().findOne({ nom })
+
+  await CommentaireModel.query().insert({
+    contenu,
+    like,
+    utilisateurs_id: utilisateurs_id,
+    dateCreation,
+    sujets_id: sujetToSupply.id,
+  })
+
+  res.status(200).send({})
 }
