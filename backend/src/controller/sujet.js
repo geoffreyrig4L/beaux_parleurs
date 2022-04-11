@@ -3,7 +3,7 @@ import CommentaireModel from "../models/commentaire.js"
 
 export const createSujet = async (req, res) => {
   const {
-    body: { nom, like, utilisateurs_id, dateCreation },
+    body: { nom, utilisateurs_id, dateCreation },
   } = req
 
   const sujet = await SujetModel.query().findOne({ nom })
@@ -15,7 +15,6 @@ export const createSujet = async (req, res) => {
 
   await SujetModel.query().insert({
     nom,
-    like,
     utilisateurs_id: utilisateurs_id,
     dateCreation,
   })
@@ -28,7 +27,6 @@ export const getSujets = async (req, res) => {
     .select(
       "sujets.id",
       "sujets.nom",
-      "sujets.like",
       "sujets.dateCreation",
       "utilisateurs.prenom as auteur"
     )
@@ -70,7 +68,6 @@ export const getCommentairesDuSujet = async (req, res) => {
     .select(
       "commentaires.id",
       "commentaires.contenu",
-      "commentaires.like",
       "utilisateurs.id as utilisateurs_id",
       "commentaires.dateCreation",
       "utilisateurs.prenom as auteur"
@@ -86,7 +83,7 @@ export const getCommentairesDuSujet = async (req, res) => {
 export const createCommentaireInSujet = async (req, res) => {
   const {
     params: { sujetId },
-    body: { contenu, like, dateCreation, utilisateurs_id, sujets_id },
+    body: { contenu, dateCreation, utilisateurs_id, sujets_id },
   } = req
 
   const sujet = await SujetModel.query().findById(sujetId)
@@ -98,7 +95,6 @@ export const createCommentaireInSujet = async (req, res) => {
 
   await CommentaireModel.query().insert({
     contenu,
-    like,
     dateCreation,
     utilisateurs_id,
     sujets_id,
@@ -139,7 +135,7 @@ export const deleteSujet = async (req, res) => {
 
 export const createSujetPlusComment = async (req, res) => {
   const {
-    body: { nom, like, utilisateurs_id, dateCreation, contenu },
+    body: { nom, utilisateurs_id, dateCreation, contenu },
   } = req
 
   const sujet = await SujetModel.query().findOne({ nom })
@@ -151,7 +147,6 @@ export const createSujetPlusComment = async (req, res) => {
 
   await SujetModel.query().insert({
     nom,
-    like,
     utilisateurs_id: utilisateurs_id,
     dateCreation,
   })
@@ -160,7 +155,6 @@ export const createSujetPlusComment = async (req, res) => {
 
   await CommentaireModel.query().insert({
     contenu,
-    like,
     utilisateurs_id: utilisateurs_id,
     dateCreation,
     sujets_id: sujetToSupply.id,

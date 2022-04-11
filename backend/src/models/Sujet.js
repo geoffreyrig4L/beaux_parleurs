@@ -29,10 +29,6 @@ class SujetModel extends Model {
   $beforeInsert() {
     this.dateCreation = new Date().toISOString()
   }
-
-  $beforeInsert() {
-    this.like = 0
-  }
 }
 
 export default SujetModel

@@ -1,44 +1,38 @@
 import { Formik, Field } from "formik"
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import api from "../services/api"
 import AppContext from "./AppContext"
 
 const AddTopicComponent = () => {
   const { router, session } = useContext(AppContext)
-  const [sujet, setSujet] = useState([])
+  const [sujet, setSujet] = useState({})
+  const [apiError, setApiError] = useState(null)
 
-  let sessionId
+  let utilisateurs_id
   if (session) {
-    sessionId = JSON.parse(session).payload.utilisateur.id
+    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
   }
 
   const handleFormSubmit = useCallback(
-    async ({ titre, contenu }) => {
-      const like = 0
-      const dateCreation = ""
-      await api.post("/sujets", { titre, like, sessionId, dateCreation })
-
-      await api.post("/commentaires", {
-        contenu,
-        like,
-        sessionId,
-        dateCreation,
-      })
-      router.push("/")
+    async ({ nom, contenu }) => {
+      console.log(nom, contenu)
+      try {
+        await api.post("/sujets/with-first-comment", {
+          nom,
+          utilisateurs_id,
+          contenu,
+        })
+      } catch (err) {
+        return { error: err }
+      }
     },
-    [router, sessionId]
+    [utilisateurs_id]
   )
-
-  const textArea = () => {
-    return (
-      <textarea className="mb-[10px] bg-gray-50 h-24 max-h-80 p-2" required />
-    )
-  }
 
   return (
     <div>
       <Formik
-        intialValues={{ titre: "", contenu: "" }}
+        initialValues={{ nom: "", contenu: "" }}
         onSubmit={handleFormSubmit}
       >
         {({ handleSubmit }) => (
@@ -49,16 +43,22 @@ const AddTopicComponent = () => {
             <label className="mr-[20px] mb-[6px] font-bold">Titre :</label>
             <Field
               className="pl-[12px] mb-[10px] bg-gray-50 h-8"
-              name="titre"
+              name="nom"
+              type="text"
               required
             />
             <label className="mr-[20px] mb-[6px] font-bold">
               Premier message :
             </label>
-            <Field name="contenu" as={textArea} />
+            <Field
+              name="contenu"
+              as="textArea"
+              className="mb-[10px] bg-gray-50 h-24 max-h-80 p-2"
+              required
+            />
             <button
               type="submit"
-              className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg"
+              className="my-6 bg-gray-100 w-3/12 h-8 m-auto rounded-lg hover:bg-teal-600 hover:text-white"
             >
               Publier
             </button>

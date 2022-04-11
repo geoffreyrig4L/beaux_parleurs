@@ -8,6 +8,7 @@ import sessionRoutes from "./src/routes/session.js"
 import commentaireRoutes from "./src/routes/commentaire.js"
 import sujetRoutes from "./src/routes/sujet.js"
 import utilisateurRoutes from "./src/routes/utilisateur.js"
+import likeRoutes from "./src/routes/like.js"
 
 const logger = pino({
   transport: {
@@ -33,6 +34,7 @@ app.use("/sessions", sessionRoutes)
 app.use("/commentaires", commentaireRoutes)
 app.use("/sujets", sujetRoutes)
 app.use("/utilisateurs", utilisateurRoutes)
+app.use("/likes", likeRoutes)
 
 app.use("/sujets", sujetRoutes)
 

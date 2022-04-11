@@ -1,9 +1,10 @@
 import { Model } from "objection"
 import SujetModel from "./sujet.js"
+import CommentaireModel from "./commentaire.js"
 import UtilisateurModel from "./utilisateur.js"
 
-class CommentaireModel extends Model {
-  static tableName = "commentaires"
+class LikeModel extends Model {
+  static tableName = "likes"
 
   static get relationMappings() {
     return {
@@ -11,24 +12,31 @@ class CommentaireModel extends Model {
         modelClass: UtilisateurModel,
         relation: Model.BelongsToOneRelation,
         join: {
-          from: "commentaires.utilisateurs_id",
+          from: "likes.utilisateurs_id",
           to: "utilisateurs.id",
+        },
+      },
+      commentaires: {
+        modelClass: CommentaireModel,
+        relation: Model.BelongsToOneRelation,
+        join: {
+          from: "likes.commentaires_id",
+          to: "commentaires.id",
         },
       },
       sujets: {
         modelClass: SujetModel,
         relation: Model.BelongsToOneRelation,
         join: {
-          from: "commentaires.sujets_id",
+          from: "likes.sujets_id",
           to: "sujets.id",
         },
       },
     }
   }
-
   $beforeInsert() {
     this.dateCreation = new Date().toISOString()
   }
 }
 
-export default CommentaireModel
+export default LikeModel

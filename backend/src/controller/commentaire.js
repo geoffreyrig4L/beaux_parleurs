@@ -2,7 +2,7 @@ import CommentaireModel from "../models/commentaire.js"
 
 export const createCommentaire = async (req, res) => {
   const {
-    body: { contenu, like, dateCreation, utilisateurs_id, sujets_id },
+    body: { contenu, dateCreation, utilisateurs_id, sujets_id },
   } = req
 
   const commentaire = await CommentaireModel.query().findOne({ contenu })
@@ -14,7 +14,6 @@ export const createCommentaire = async (req, res) => {
 
   await CommentaireModel.query().insert({
     contenu,
-    like,
     sujets_id,
     utilisateurs_id,
     dateCreation,
@@ -24,17 +23,6 @@ export const createCommentaire = async (req, res) => {
 }
 
 export const getCommentaires = async (req, res) => {
-  /*const {
-    params: { trieur, sens },
-  } = req
-
-  if (!trieur) {
-    trieur = "dateCreation"
-  }
-  if (!sens) {
-    sens = "desc"
-  }*/
-
   const trieur = "dateCreation"
   const sens = "desc"
 
@@ -42,7 +30,6 @@ export const getCommentaires = async (req, res) => {
     .select(
       "commentaires.id",
       "commentaires.contenu",
-      "commentaires.like",
       "commentaires.dateCreation",
       "utilisateurs.prenom as auteur",
       "sujets.nom as nom_sujet"
@@ -56,12 +43,12 @@ export const getCommentaires = async (req, res) => {
 export const modifyCommentaire = async (req, res) => {
   const {
     params: { commentaireId },
-    body: { contenu, like },
+    body: { contenu },
   } = req
 
   const commentaire = await CommentaireModel.query().updateAndFetchById(
     commentaireId,
-    { contenu, like }
+    { contenu }
   )
 
   if (!commentaire) {

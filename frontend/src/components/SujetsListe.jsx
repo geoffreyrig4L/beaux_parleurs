@@ -21,7 +21,7 @@ const SujetsListe = () => {
   }, [])
 
   return (
-    <ul>
+    <ul className="mb-[165px]">
       {sujets.map((sujet) => (
         <li key={sujet.id} className="mb-8">
           <a href={`/sujets/${encodeURIComponent(sujet.id)}`}>

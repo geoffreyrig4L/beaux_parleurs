@@ -21,7 +21,7 @@ const Sujet = ({ sujetId }) => {
   useEffect(() => {
     if (sujetId && !isNaN(sujetId)) {
       api
-        .get(`/sujets/${sujetId}`)
+        .get(`/sujets/id=${sujetId}`)
         .then((response) => setSujet(response.data))
         .catch((error) =>
           setApiError(

@@ -6,41 +6,37 @@ import api from "../services/api"
 const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
   const { session, router } = useContext(AppContext)
   const [apiError, setApiError] = useState(null)
-  const [utilisateur, setUtilisateur] = useState(0)
 
-  useEffect(() => {
-    if (session) {
-      setUtilisateur(JSON.parse(session).payload.utilisateur.id)
-    }
-  })
+  let utilisateurs_id = 0
+  if (session) {
+    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
+  }
 
   const handleFormSubmit = useCallback(
     async ({ contenu }) => {
-      const like = 0
-      const dateCreation = ""
       try {
         if (action === "creer") {
-          console.log("1 " + action)
-          await api.post(`/sujets/${parseInt(sujetId)}/commentaires`, {
+          console.log("1 " + action, utilisateurs_id, sujetId, contenu)
+          const sujets_id = sujetId
+          await api.post(`/sujets/${sujets_id}/commentaires`, {
             contenu,
-            like,
-            dateCreation,
-            utilisateur,
-            sujet,
+            utilisateurs_id,
+            sujets_id,
           })
+          location.reload()
         } else if (action === "modifier") {
           console.log("2 " + action)
           await api.put(`/commentaires/${commentaire.id}`, {
             contenu,
           })
-          router.push(`/sujets/${sujetId}`)
+          router.back()
         }
       } catch (err) {
         setApiError(err.response.data.error)
         console.log(apiError)
       }
     },
-    [utilisateur, sujetId, action, apiError, commentaire.id, router]
+    [utilisateurs_id, sujetId, action, apiError, commentaire.id, router]
   )
 
   return addComment ? (
