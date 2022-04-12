@@ -30,7 +30,7 @@ const Sujet = ({ sujetId }) => {
         )
     }
 
-    const utilisateurId = sujet.utilisateurs_id
+    const utilisateurId = sujet.sujets_utilisateurs
 
     if (utilisateurId && !isNaN(utilisateurId)) {
       api
@@ -42,7 +42,7 @@ const Sujet = ({ sujetId }) => {
           )
         )
     }
-  }, [sujetId, sujet.utilisateurs_id])
+  }, [sujetId, sujet.sujets_utilisateurs])
 
   function plusOrMinus() {
     return operation === "+" ? setOperation("-") : setOperation("+")
@@ -98,7 +98,7 @@ const Sujet = ({ sujetId }) => {
           </p>
         </span>
       </div>
-      <CommentairesListe sujetId={sujetId} />
+      <CommentairesListe utilisateurId={utilisateur.id} sujetId={sujetId} />
       {formAddComment()}
     </div>
   )

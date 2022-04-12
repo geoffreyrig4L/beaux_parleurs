@@ -8,25 +8,25 @@ const AddTopicComponent = () => {
   const [sujet, setSujet] = useState({})
   const [apiError, setApiError] = useState(null)
 
-  let utilisateurs_id
+  let utilisateurId
   if (session) {
-    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
+    utilisateurId = JSON.parse(session).payload.utilisateur.id
   }
 
   const handleFormSubmit = useCallback(
     async ({ nom, contenu }) => {
-      console.log(nom, contenu)
       try {
         await api.post("/sujets/with-first-comment", {
           nom,
-          utilisateurs_id,
+          utilisateurId,
           contenu,
         })
       } catch (err) {
         return { error: err }
       }
+      router.push("/")
     },
-    [utilisateurs_id]
+    [utilisateurId, router]
   )
 
   return (

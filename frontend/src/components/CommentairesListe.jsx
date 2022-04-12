@@ -13,17 +13,10 @@ const formatterDate = (date) => {
   return (date = new Date(date).toLocaleString())
 }
 
-const CommentaireListe = ({ sujetId }) => {
+const CommentaireListe = ({ utilisateurId, sujetId }) => {
   const [commentaires, setCommentaires] = useState([])
-  const [likes, setLikes] = useState(0)
   const [apiError, setApiError] = useState(null)
   const { session } = useContext(AppContext)
-
-  let utilisateurs_id = ""
-
-  if (session) {
-    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
-  }
 
   if (!sujetId) {
     sujetId = 1
@@ -38,34 +31,22 @@ const CommentaireListe = ({ sujetId }) => {
       )
   }, [sujetId])
 
-  function asTuLike(commentaireId) {
-    let asTuLike = false
-    api
-      .get(
-        `utilisateurs/utilisateur=${utilisateurs_id}&commentaire=${commentaireId}/likes`
+  function likerOuDisliker(commentaire) {
+    const commentaireId = commentaire.id
+    if (
+      commentaire.likes_utilisateurs == null ||
+      commentaire.likes_utilisateurs != utilisateurId
+    ) {
+      api.post(`likes/commentaire`, { utilisateurId, commentaireId })
+    } else {
+      api.delete(
+        `likes/utilisateur=${utilisateurId}&commentaire=${commentaireId}`
       )
-      .then((response) => (asTuLike = response.data))
-      .catch((error) =>
-        setApiError(error.response ? error.response.data.error : error.message)
-      )
-    console.log(asTuLike)
-    return !asTuLike ? (
-      <FontAwesomeIcon
-        icon={faHeartSolid}
-        className="text-2xl text-lg px-1 text-indigo-600"
-      />
-    ) : (
-      <FontAwesomeIcon
-        icon={faHeartRegular}
-        className="text-2xl text-lg px-1 text-indigo-600"
-      />
-    )
+    }
+    location.reload()
   }
 
-  function likerCommentaire(commentaires_id) {
-    //api.post(`likes/commentaire`, { utilisateurs_id, commentaires_id })
-  }
-
+  console.log(utilisateurId)
   return (
     <ul>
       {commentaires.map((commentaire) => (
@@ -86,8 +67,11 @@ const CommentaireListe = ({ sujetId }) => {
               <p className="bg-gray-100 mx-2 p-5 flex-1 rounded-lg w-[600px]">
                 {commentaire.contenu}
               </p>
-              <span onClick={likerCommentaire(commentaire.id)}>
-                {asTuLike(commentaire.id)}
+              <span onClick={() => likerOuDisliker(commentaire)}>
+                <FontAwesomeIcon
+                  icon={faHeartSolid}
+                  className="text-2xl text-lg px-1 text-indigo-600"
+                />
               </span>
               <p className="font-bold text-indigo-600">
                 {commentaire.totalLikes}

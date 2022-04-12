@@ -7,25 +7,23 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
   const { session, router } = useContext(AppContext)
   const [apiError, setApiError] = useState(null)
 
-  let utilisateurs_id = 0
+  let utilisateurId = 0
   if (session) {
-    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
+    utilisateurId = JSON.parse(session).payload.utilisateur.id
   }
 
   const handleFormSubmit = useCallback(
     async ({ contenu }) => {
       try {
         if (action === "creer") {
-          console.log("1 " + action, utilisateurs_id, sujetId, contenu)
-          const sujets_id = sujetId
-          await api.post(`/sujets/${sujets_id}/commentaires`, {
+          const commentaires_sujets = sujetId
+          await api.post(`/sujets/${sujetId}/commentaires`, {
             contenu,
-            utilisateurs_id,
-            sujets_id,
+            utilisateurId,
+            commentaires_sujets,
           })
           location.reload()
         } else if (action === "modifier") {
-          console.log("2 " + action)
           await api.put(`/commentaires/${commentaire.id}`, {
             contenu,
           })
@@ -33,10 +31,9 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
         }
       } catch (err) {
         setApiError(err.response.data.error)
-        console.log(apiError)
       }
     },
-    [utilisateurs_id, sujetId, action, apiError, commentaire.id, router]
+    [utilisateurId, sujetId, action, apiError, commentaire.id, router]
   )
 
   return addComment ? (

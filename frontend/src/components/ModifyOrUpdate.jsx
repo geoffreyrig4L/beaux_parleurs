@@ -13,16 +13,11 @@ const ModifyOrUpdate = ({ commentaire }) => {
   }
 
   function deleteCommentaire() {
-    api
-      .delete(`/commentaires/${commentaire.id}`)
-      .then((response) => console.log(response))
-      .catch((error) =>
-        setApiError(error.response ? error.response.data.error : error.message)
-      )
+    api.delete(`/commentaires/${commentaire.id}`)
     location.reload()
   }
 
-  if (id == commentaire.utilisateurs_id)
+  if (id == commentaire.commentaires_utilisateurs)
     return (
       <div className="flex flex-row justify-end mb-1">
         <button>

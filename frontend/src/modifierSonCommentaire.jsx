@@ -29,7 +29,7 @@ const modifierSonCommentaire = ({ commentaireId }) => {
         titre="Votre commentaire :"
         action="modifier"
         commentaire={commentaire}
-        sujetId={commentaire.sujets_id}
+        sujetId={commentaire.commentaires_sujets}
       />
     </div>
   )
