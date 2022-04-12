@@ -1,6 +1,7 @@
 import { Model } from "objection"
 import UtilisateurModel from "./utilisateur.js"
 import CommentaireModel from "./commentaire.js"
+import LikeModel from "./like.js"
 
 class SujetModel extends Model {
   static tableName = "sujets"
@@ -13,6 +14,14 @@ class SujetModel extends Model {
         join: {
           from: "sujets.utilisateurs_id",
           to: "utilisateurs.id",
+        },
+      },
+      likes: {
+        modelClass: LikeModel,
+        relation: Model.HasManyRelation,
+        join: {
+          from: "sujets.id",
+          to: "likes.sujets_id",
         },
       },
       commentaires: {

@@ -10,8 +10,6 @@ import auth from "../middleware/auth.js"
 
 const router = express.Router()
 
-//commentaires?trierPar=:trieur&sens=:sens/
-
 router.get("/", getCommentaires)
 router.put("/:commentaireId", auth, modifyCommentaire)
 router.post("/", auth, createCommentaire)

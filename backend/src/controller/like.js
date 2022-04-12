@@ -1,3 +1,4 @@
+import { query } from "express"
 import LikeModel from "../models/like.js"
 
 export const createLikeForSujet = async (req, res) => {
@@ -20,6 +21,8 @@ export const createLikeForSujet = async (req, res) => {
     sujets_id,
     dateCreation,
   })
+
+  res.status(200).send("Like ajouté sur le sujet.")
 }
 
 export const createLikeForCommentaire = async (req, res) => {
@@ -42,6 +45,8 @@ export const createLikeForCommentaire = async (req, res) => {
     commentaires_id,
     dateCreation,
   })
+
+  res.status(200).send("Like ajouté sur le commentaire.")
 }
 
 export const getLikes = async (req, res) => {
@@ -60,4 +65,47 @@ export const getLikes = async (req, res) => {
     .orderBy("dateCreation", "desc")
 
   res.status(200).send(like)
+}
+
+export const deleteLikeForSujet = async (req, res) => {
+  const {
+    params: { utilisateurs_id, sujets_id },
+  } = req
+
+  const like = await LikeModel.query().findOne({
+    sujets_id: sujets_id,
+    utilisateurs_id: utilisateurs_id,
+  })
+
+  if (!like) {
+    res.status(404).send("Le like n'existe pas.")
+    return
+  }
+
+  await LikeModel.query()
+    .delete()
+    .where({ sujets_id: sujets_id, utilisateurs_id: utilisateurs_id })
+  res.status(200).send({ status: "Like supprimé." })
+}
+
+export const deleteLikeForCommentaire = async (req, res) => {
+  const {
+    params: { utilisateurs_id, commentaires_id },
+  } = req
+
+  const like = await LikeModel.query().findOne({
+    commentaires_id: commentaires_id,
+    utilisateurs_id: utilisateurs_id,
+  })
+
+  if (!like) {
+    res.status(404).send("Le like n'existe pas.")
+    return
+  }
+
+  await LikeModel.query().delete().where({
+    commentaires_id: commentaires_id,
+    utilisateurs_id: utilisateurs_id,
+  })
+  res.status(200).send({ status: "Like supprimé." })
 }

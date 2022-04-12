@@ -3,10 +3,11 @@ import {
   faHeart as faHeartSolid,
   faCircleUser,
 } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 import ModifyOrUpdate from "./ModifyOrUpdate"
+import AppContext from "./AppContext"
 
 const formatterDate = (date) => {
   return (date = new Date(date).toLocaleString())
@@ -14,11 +15,18 @@ const formatterDate = (date) => {
 
 const CommentaireListe = ({ sujetId }) => {
   const [commentaires, setCommentaires] = useState([])
-  const [like, setLike] = useState(false)
+  const [likes, setLikes] = useState(0)
   const [apiError, setApiError] = useState(null)
+  const { session } = useContext(AppContext)
+
+  let utilisateurs_id = ""
+
+  if (session) {
+    utilisateurs_id = JSON.parse(session).payload.utilisateur.id
+  }
 
   if (!sujetId) {
-    sujetId = 0
+    sujetId = 1
   }
 
   useEffect(() => {
@@ -29,6 +37,34 @@ const CommentaireListe = ({ sujetId }) => {
         setApiError(error.response ? error.response.data.error : error.message)
       )
   }, [sujetId])
+
+  function asTuLike(commentaireId) {
+    let asTuLike = false
+    api
+      .get(
+        `utilisateurs/utilisateur=${utilisateurs_id}&commentaire=${commentaireId}/likes`
+      )
+      .then((response) => (asTuLike = response.data))
+      .catch((error) =>
+        setApiError(error.response ? error.response.data.error : error.message)
+      )
+    console.log(asTuLike)
+    return !asTuLike ? (
+      <FontAwesomeIcon
+        icon={faHeartSolid}
+        className="text-2xl text-lg px-1 text-indigo-600"
+      />
+    ) : (
+      <FontAwesomeIcon
+        icon={faHeartRegular}
+        className="text-2xl text-lg px-1 text-indigo-600"
+      />
+    )
+  }
+
+  function likerCommentaire(commentaires_id) {
+    //api.post(`likes/commentaire`, { utilisateurs_id, commentaires_id })
+  }
 
   return (
     <ul>
@@ -50,20 +86,12 @@ const CommentaireListe = ({ sujetId }) => {
               <p className="bg-gray-100 mx-2 p-5 flex-1 rounded-lg w-[600px]">
                 {commentaire.contenu}
               </p>
-              <span>
-                {!like ? (
-                  <FontAwesomeIcon
-                    icon={faHeartSolid}
-                    className="text-2xl text-lg px-1 text-indigo-600"
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faHeartRegular}
-                    className="text-2xl text-lg px-1 text-indigo-600"
-                  />
-                )}
+              <span onClick={likerCommentaire(commentaire.id)}>
+                {asTuLike(commentaire.id)}
               </span>
-              <p className="font-bold text-indigo-600">{commentaire.like}</p>
+              <p className="font-bold text-indigo-600">
+                {commentaire.totalLikes}
+              </p>
             </div>
             <p className="text-[0.6em] text-right">
               {formatterDate(commentaire.dateCreation)}

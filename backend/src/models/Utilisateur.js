@@ -3,6 +3,7 @@ import { randomBytes, pbkdf2Sync } from "crypto"
 import config from "../config.js"
 import SujetModel from "./sujet.js"
 import CommentaireModel from "./commentaire.js"
+import LikeModel from "./like.js"
 
 const {
   security: {
@@ -21,6 +22,14 @@ class UtilisateurModel extends Model {
         join: {
           from: "utilisateurs.id",
           to: "sujets.utilisateurs_id",
+        },
+      },
+      likes: {
+        modelClass: LikeModel,
+        relation: Model.HasManyRelation,
+        join: {
+          from: "utilisateurs.id",
+          to: "likes.utilisateurs_id",
         },
       },
       commentaires: {

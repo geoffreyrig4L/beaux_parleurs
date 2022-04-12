@@ -10,6 +10,7 @@ import {
   getSujetByNom,
   deleteSujet,
   createSujetPlusComment,
+  getLikesDuSujet,
 } from "../controller/sujet.js"
 
 const router = express.Router()
@@ -22,5 +23,6 @@ router.get("/:sujetId/commentaires", getCommentairesDuSujet)
 router.post("/:sujetId/commentaires", auth, createCommentaireInSujet)
 router.post("/with-first-comment", auth, createSujetPlusComment)
 router.delete("/:sujetId", auth, deleteSujet)
+router.get("/:sujetId/likes", getLikesDuSujet)
 
 export default router
