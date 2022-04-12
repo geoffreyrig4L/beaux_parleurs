@@ -46,6 +46,22 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
     location.reload()
   }
 
+  function logoLike(commentaire) {
+    return utilisateurId == commentaire.likes_utilisateurs ? (
+      <FontAwesomeIcon
+        icon={faHeartSolid}
+        className="text-2xl text-lg px-1 text-indigo-600"
+        title="Je n'aime plus"
+      />
+    ) : (
+      <FontAwesomeIcon
+        icon={faHeartRegular}
+        className="text-2xl text-lg px-1 text-indigo-600"
+        title="J'aime"
+      />
+    )
+  }
+
   console.log(utilisateurId)
   return (
     <ul>
@@ -68,10 +84,7 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
                 {commentaire.contenu}
               </p>
               <span onClick={() => likerOuDisliker(commentaire)}>
-                <FontAwesomeIcon
-                  icon={faHeartSolid}
-                  className="text-2xl text-lg px-1 text-indigo-600"
-                />
+                {logoLike(commentaire)}
               </span>
               <p className="font-bold text-indigo-600">
                 {commentaire.totalLikes}
