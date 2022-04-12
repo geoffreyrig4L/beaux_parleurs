@@ -7,6 +7,7 @@ import {
   getLikes,
   deleteLikeForSujet,
   deleteLikeForCommentaire,
+  deleteLikes,
 } from "../controller/like.js"
 
 const router = express.Router()
@@ -15,14 +16,15 @@ router.post("/sujet", auth, createLikeForSujet)
 router.post("/commentaire", auth, createLikeForCommentaire)
 router.get("/", getLikes)
 router.delete(
-  "/utilisateur=:utilisateurs_id&sujet=:sujets_id",
+  "/utilisateur=:utilisateurId&sujet=:sujetId",
   auth,
   deleteLikeForSujet
 )
 router.delete(
-  "/utilisateur=:utilisateurs_id&commentaire=:commentaires_id",
+  "/utilisateur=:utilisateurId&commentaire=:commentaireId",
   auth,
   deleteLikeForCommentaire
 )
+router.delete("/", deleteLikes)
 
 export default router

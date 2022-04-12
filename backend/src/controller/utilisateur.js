@@ -42,10 +42,10 @@ export const deleteUtilisateur = async (req, res) => {
 
 export const asTuLikesLeCommentaire = async (req, res) => {
   const {
-    params: { utilisateurs_id, commentaires_id },
+    params: { utilisateurId, commentaireId },
   } = req
 
-  const commentaire = await CommentaireModel.query().findById(commentaires_id)
+  const commentaire = await CommentaireModel.query().findById(commentaireId)
 
   if (!commentaire) {
     res.status(404).send({ error: "Commentaire introuvable." })
@@ -53,8 +53,8 @@ export const asTuLikesLeCommentaire = async (req, res) => {
   }
 
   const like = await LikeModel.query().findOne({
-    commentaires_id,
-    utilisateurs_id,
+    likes_commentaires: commentaireId,
+    likes_utilisateurs: utilisateurId,
   })
   if (like) {
     res.status(200).send(true)
@@ -66,10 +66,10 @@ export const asTuLikesLeCommentaire = async (req, res) => {
 
 export const asTuLikesLeSujet = async (req, res) => {
   const {
-    params: { utilisateurs_id, sujets_id },
+    params: { utilisateurId, sujetId },
   } = req
 
-  const sujet = await SujetModel.query().findById(sujets_id)
+  const sujet = await SujetModel.query().findById(sujetId)
 
   if (!sujet) {
     res.status(404).send({ error: "Sujet introuvable." })
@@ -77,8 +77,8 @@ export const asTuLikesLeSujet = async (req, res) => {
   }
 
   const like = await LikeModel.query().findOne({
-    sujets_id,
-    utilisateurs_id,
+    likes_sujets: sujetId,
+    likes_utilisateurs: utilisateurId,
   })
   if (like) {
     res.status(200).send(true)

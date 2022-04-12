@@ -2,7 +2,7 @@ import CommentaireModel from "../models/commentaire.js"
 
 export const createCommentaire = async (req, res) => {
   const {
-    body: { contenu, dateCreation, utilisateurs_id, sujets_id },
+    body: { contenu, dateCreation, utilisateurId, sujetId },
   } = req
 
   const commentaire = await CommentaireModel.query().findOne({ contenu })
@@ -14,8 +14,8 @@ export const createCommentaire = async (req, res) => {
 
   await CommentaireModel.query().insert({
     contenu,
-    sujets_id,
-    utilisateurs_id,
+    commentaires_sujets: sujetId,
+    commentaires_utilisateurs: utilisateurId,
     dateCreation,
   })
 
@@ -23,9 +23,6 @@ export const createCommentaire = async (req, res) => {
 }
 
 export const getCommentaires = async (req, res) => {
-  const trieur = "dateCreation"
-  const sens = "desc"
-
   const commentaires = await CommentaireModel.query()
     .select(
       "commentaires.id",
@@ -35,7 +32,7 @@ export const getCommentaires = async (req, res) => {
       "sujets.nom as nom_sujet"
     )
     .leftJoinRelated("[utilisateurs,sujets]")
-    .orderBy(trieur, sens)
+    .orderBy("dateCreation", "desc")
 
   res.status(200).send(commentaires)
 }

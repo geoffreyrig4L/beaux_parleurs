@@ -3,12 +3,12 @@ import LikeModel from "../models/like.js"
 
 export const createLikeForSujet = async (req, res) => {
   const {
-    body: { utilisateurs_id, sujets_id, dateCreation },
+    body: { utilisateurId, sujetId, dateCreation },
   } = req
 
   const like = await LikeModel.query().findOne({
-    utilisateurs_id: utilisateurs_id,
-    sujets_id: sujets_id,
+    likes_utilisateurs: utilisateurId,
+    likes_sujets: sujetId,
   })
 
   if (like) {
@@ -17,8 +17,8 @@ export const createLikeForSujet = async (req, res) => {
   }
 
   await LikeModel.query().insert({
-    utilisateurs_id,
-    sujets_id,
+    likes_utilisateurs: utilisateurId,
+    likes_sujets: sujetId,
     dateCreation,
   })
 
@@ -27,12 +27,12 @@ export const createLikeForSujet = async (req, res) => {
 
 export const createLikeForCommentaire = async (req, res) => {
   const {
-    body: { utilisateurs_id, commentaires_id, dateCreation },
+    body: { utilisateurId, commentaireId, dateCreation },
   } = req
 
   const like = await LikeModel.query().findOne({
-    utilisateurs_id: utilisateurs_id,
-    commentaires_id: commentaires_id,
+    likes_utilisateurs: utilisateurId,
+    likes_commentaires: commentaireId,
   })
 
   if (like) {
@@ -41,8 +41,8 @@ export const createLikeForCommentaire = async (req, res) => {
   }
 
   await LikeModel.query().insert({
-    utilisateurs_id,
-    commentaires_id,
+    likes_utilisateurs: utilisateurId,
+    likes_commentaires: commentaireId,
     dateCreation,
   })
 
@@ -54,11 +54,11 @@ export const getLikes = async (req, res) => {
     .select(
       "likes.id",
       "likes.dateCreation",
-      "utilisateurs.id as utilisateurs_id",
+      "utilisateurs.id as utilisateurId",
       "utilisateurs.prenom as auteur",
-      "sujets.id as sujets_id ",
+      "sujets.id as sujetId ",
       "sujets.nom as nom_sujet",
-      "commentaires.id as commentaires_id ",
+      "commentaires.id as commentaireId ",
       "commentaires.contenu as contenu_commentaire"
     )
     .leftJoinRelated("[utilisateurs,sujets,commentaires]")
@@ -69,12 +69,12 @@ export const getLikes = async (req, res) => {
 
 export const deleteLikeForSujet = async (req, res) => {
   const {
-    params: { utilisateurs_id, sujets_id },
+    params: { utilisateurId, sujetId },
   } = req
 
   const like = await LikeModel.query().findOne({
-    sujets_id: sujets_id,
-    utilisateurs_id: utilisateurs_id,
+    likes_sujets: sujetId,
+    likes_utilisateurs: utilisateurId,
   })
 
   if (!like) {
@@ -84,18 +84,18 @@ export const deleteLikeForSujet = async (req, res) => {
 
   await LikeModel.query()
     .delete()
-    .where({ sujets_id: sujets_id, utilisateurs_id: utilisateurs_id })
+    .where({ likes_sujets: sujetId, likes_utilisateurs: utilisateurId })
   res.status(200).send({ status: "Like supprimé." })
 }
 
 export const deleteLikeForCommentaire = async (req, res) => {
   const {
-    params: { utilisateurs_id, commentaires_id },
+    params: { utilisateurId, commentaireId },
   } = req
 
   const like = await LikeModel.query().findOne({
-    commentaires_id: commentaires_id,
-    utilisateurs_id: utilisateurs_id,
+    likes_commentaires: commentaireId,
+    likes_utilisateurs: utilisateurId,
   })
 
   if (!like) {
@@ -104,8 +104,13 @@ export const deleteLikeForCommentaire = async (req, res) => {
   }
 
   await LikeModel.query().delete().where({
-    commentaires_id: commentaires_id,
-    utilisateurs_id: utilisateurs_id,
+    likes_commentaires: commentaireId,
+    likes_utilisateurs: utilisateurId,
   })
   res.status(200).send({ status: "Like supprimé." })
+}
+
+export const deleteLikes = async (req, res) => {
+  await LikeModel.query().delete()
+  res.status(200).send({ status: "LikeS supprimé." })
 }

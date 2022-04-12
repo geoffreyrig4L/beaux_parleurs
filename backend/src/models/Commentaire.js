@@ -12,7 +12,7 @@ class CommentaireModel extends Model {
         modelClass: UtilisateurModel,
         relation: Model.BelongsToOneRelation,
         join: {
-          from: "commentaires.utilisateurs_id",
+          from: "commentaires.commentaires_utilisateurs",
           to: "utilisateurs.id",
         },
       },
@@ -21,14 +21,14 @@ class CommentaireModel extends Model {
         relation: Model.HasManyRelation,
         join: {
           from: "commentaires.id",
-          to: "likes.commentaires_id",
+          to: "likes.likes_commentaires",
         },
       },
       sujets: {
         modelClass: SujetModel,
         relation: Model.BelongsToOneRelation,
         join: {
-          from: "commentaires.sujets_id",
+          from: "commentaires.commentaires_sujets",
           to: "sujets.id",
         },
       },

@@ -5,7 +5,7 @@ import UtilisateurModel from "../models/utilisateur.js"
 
 export const createSujet = async (req, res) => {
   const {
-    body: { nom, utilisateurs_id, dateCreation },
+    body: { nom, utilisateurId, dateCreation },
   } = req
 
   const sujet = await SujetModel.query().findOne({ nom })
@@ -17,7 +17,7 @@ export const createSujet = async (req, res) => {
 
   await SujetModel.query().insert({
     nom,
-    utilisateurs_id: utilisateurs_id,
+    sujets_utilisateurs: utilisateurId,
     dateCreation,
   })
 
@@ -70,14 +70,14 @@ export const getCommentairesDuSujet = async (req, res) => {
     .select(
       "commentaires.id",
       "commentaires.contenu",
-      "utilisateurs.id as utilisateurs_id",
+      "utilisateurs.id as commentaires_utilisateurs",
       "commentaires.dateCreation",
       "utilisateurs.prenom as auteur",
+      "likes.likes_utilisateurs as likes_utilisateurs",
       CommentaireModel.relatedQuery("likes").count().as("totalLikes")
     )
-    .leftJoinRelated("sujets")
-    .leftJoinRelated("utilisateurs")
-    .where({ sujets_id: sujetId })
+    .leftJoinRelated("[sujets,utilisateurs,likes]")
+    .where({ commentaires_sujets: sujetId })
     .orderBy("commentaires.dateCreation", "asc")
 
   res.status(200).send(commentaires)
@@ -105,7 +105,7 @@ export const getLikesDuSujet = async (req, res) => {
 export const createCommentaireInSujet = async (req, res) => {
   const {
     params: { sujetId },
-    body: { contenu, dateCreation, utilisateurs_id, sujets_id },
+    body: { contenu, dateCreation, utilisateurId, commentaires_sujets },
   } = req
 
   const sujet = await SujetModel.query().findById(sujetId)
@@ -118,8 +118,8 @@ export const createCommentaireInSujet = async (req, res) => {
   await CommentaireModel.query().insert({
     contenu,
     dateCreation,
-    utilisateurs_id,
-    sujets_id,
+    commentaires_utilisateurs: utilisateurId,
+    commentaires_sujets,
   })
 
   res.status(200).send({ status: "Commentaire créé." })
@@ -157,7 +157,7 @@ export const deleteSujet = async (req, res) => {
 
 export const createSujetPlusComment = async (req, res) => {
   const {
-    body: { nom, utilisateurs_id, dateCreation, contenu },
+    body: { nom, utilisateurId, dateCreation, contenu },
   } = req
 
   const sujet = await SujetModel.query().findOne({ nom })
@@ -169,7 +169,7 @@ export const createSujetPlusComment = async (req, res) => {
 
   await SujetModel.query().insert({
     nom,
-    utilisateurs_id: utilisateurs_id,
+    sujets_utilisateurs: utilisateurId,
     dateCreation,
   })
 
@@ -177,9 +177,9 @@ export const createSujetPlusComment = async (req, res) => {
 
   await CommentaireModel.query().insert({
     contenu,
-    utilisateurs_id: utilisateurs_id,
+    commentaires_utilisateurs: utilisateurId,
     dateCreation,
-    sujets_id: sujetToSupply.id,
+    commentaires_sujets: sujetToSupply.id,
   })
 
   res.status(200).send({})

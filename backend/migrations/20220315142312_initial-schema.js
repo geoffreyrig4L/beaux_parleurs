@@ -17,9 +17,9 @@ export const up = async (knex) => {
   await knex.schema.createTable("sujets", (table) => {
     table.increments().unique()
     table.text("nom").notNullable()
-    table.integer("utilisateurs_id").notNullable()
+    table.integer("sujets_utilisateurs").notNullable()
     table
-      .foreign("utilisateurs_id")
+      .foreign("sujets_utilisateurs")
       .references("id")
       .inTable("utilisateurs")
       .onDelete("SET NULL")
@@ -28,15 +28,15 @@ export const up = async (knex) => {
   await knex.schema.createTable("commentaires", (table) => {
     table.increments().unique()
     table.text("contenu").notNullable()
-    table.integer("sujets_id").notNullable()
+    table.integer("commentaires_sujets").notNullable()
     table
-      .foreign("sujets_id")
+      .foreign("commentaires_sujets")
       .references("id")
       .inTable("sujets")
       .onDelete("CASCADE")
-    table.integer("utilisateurs_id").notNullable()
+    table.integer("commentaires_utilisateurs").notNullable()
     table
-      .foreign("utilisateurs_id")
+      .foreign("commentaires_utilisateurs")
       .references("id")
       .inTable("utilisateurs")
       .onDelete("SET NULL")
@@ -44,21 +44,21 @@ export const up = async (knex) => {
   })
   await knex.schema.createTable("likes", (table) => {
     table.increments().unique()
-    table.integer("sujets_id")
+    table.integer("likes_sujets")
     table
-      .foreign("sujets_id")
+      .foreign("likes_sujets")
       .references("id")
       .inTable("sujets")
       .onDelete("CASCADE")
-    table.integer("commentaires_id")
+    table.integer("likes_commentaires")
     table
-      .foreign("commentaires_id")
+      .foreign("likes_commentaires")
       .references("id")
       .inTable("commentaires")
       .onDelete("CASCADE")
-    table.integer("utilisateurs_id").notNullable()
+    table.integer("likes_utilisateurs").notNullable()
     table
-      .foreign("utilisateurs_id")
+      .foreign("likes_utilisateurs")
       .references("id")
       .inTable("utilisateurs")
       .onDelete("CASCADE")

@@ -14,12 +14,9 @@ router.get("/:utilisateurId", auth, getUtilisateur)
 router.get("/", auth, getUtilisateurs)
 router.delete("/:utilisateurId", auth, deleteUtilisateur)
 router.get(
-  "/utilisateur=:utilisateurs_id&commentaire=:commentaires_id/likes",
+  "/utilisateur=:utilisateurId&commentaire=:commentaireId/likes",
   asTuLikesLeCommentaire
 )
-router.get(
-  "/utilisateur=:utilisateurs_id&sujet=:sujets_id/likes",
-  asTuLikesLeSujet
-)
+router.get("/utilisateur=:utilisateurId&sujet=:sujetId/likes", asTuLikesLeSujet)
 
 export default router

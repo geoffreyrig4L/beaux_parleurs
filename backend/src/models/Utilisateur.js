@@ -21,7 +21,7 @@ class UtilisateurModel extends Model {
         relation: Model.HasManyRelation,
         join: {
           from: "utilisateurs.id",
-          to: "sujets.utilisateurs_id",
+          to: "sujets.sujets_utilisateurs",
         },
       },
       likes: {
@@ -29,7 +29,7 @@ class UtilisateurModel extends Model {
         relation: Model.HasManyRelation,
         join: {
           from: "utilisateurs.id",
-          to: "likes.utilisateurs_id",
+          to: "likes.likes_utilisateurs",
         },
       },
       commentaires: {
@@ -37,7 +37,7 @@ class UtilisateurModel extends Model {
         relation: Model.HasManyRelation,
         join: {
           from: "utilisateurs.id",
-          to: "commentaires.utilisateurs_id",
+          to: "commentaires.commentaires_utilisateurs",
         },
       },
     }
