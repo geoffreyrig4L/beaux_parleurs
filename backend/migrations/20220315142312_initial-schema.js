@@ -38,12 +38,6 @@ export const up = async (knex) => {
   })
   await knex.schema.createTable("likes", (table) => {
     table.increments().unique()
-    table.integer("likes_sujets")
-    table
-      .foreign("likes_sujets")
-      .references("id")
-      .inTable("sujets")
-      .onDelete("CASCADE")
     table.integer("likes_commentaires")
     table
       .foreign("likes_commentaires")

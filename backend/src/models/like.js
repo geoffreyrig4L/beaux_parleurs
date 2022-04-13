@@ -1,5 +1,4 @@
 import { Model } from "objection"
-import SujetModel from "./sujet.js"
 import CommentaireModel from "./commentaire.js"
 import UtilisateurModel from "./utilisateur.js"
 
@@ -22,14 +21,6 @@ class LikeModel extends Model {
         join: {
           from: "likes.likes_commentaires",
           to: "commentaires.id",
-        },
-      },
-      sujets: {
-        modelClass: SujetModel,
-        relation: Model.BelongsToOneRelation,
-        join: {
-          from: "likes.likes_sujets",
-          to: "sujets.id",
         },
       },
     }

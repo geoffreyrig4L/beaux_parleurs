@@ -1,7 +1,5 @@
 import SujetModel from "../models/sujet.js"
 import CommentaireModel from "../models/commentaire.js"
-import LikeModel from "../models/like.js"
-import UtilisateurModel from "../models/utilisateur.js"
 
 export const createSujet = async (req, res) => {
   const {
@@ -73,33 +71,13 @@ export const getCommentairesDuSujet = async (req, res) => {
       "utilisateurs.id as commentaires_utilisateurs",
       "commentaires.dateCreation",
       "utilisateurs.prenom as auteur",
-      "likes.likes_utilisateurs as likes_utilisateurs",
       CommentaireModel.relatedQuery("likes").count().as("totalLikes")
     )
-    .leftJoinRelated("[sujets,utilisateurs,likes]")
+    .leftJoinRelated("[sujets,utilisateurs]")
     .where({ commentaires_sujets: sujetId })
     .orderBy("commentaires.dateCreation", "asc")
 
   res.status(200).send(commentaires)
-}
-
-export const getLikesDuSujet = async (req, res) => {
-  const {
-    params: { sujetId },
-  } = req
-
-  const sujet = await SujetModel.query().findById(sujetId)
-
-  if (!sujet) {
-    res.status(404).send({ error: "Sujet introuvable." })
-    return
-  }
-
-  const likes = await SujetModel.query().select(
-    SujetModel.relatedQuery("likes").count().as("totalLikes")
-  )
-
-  res.status(200).send(likes)
 }
 
 export const createCommentaireInSujet = async (req, res) => {

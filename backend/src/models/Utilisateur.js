@@ -3,7 +3,7 @@ import { randomBytes, pbkdf2Sync } from "crypto"
 import config from "../config.js"
 import SujetModel from "./sujet.js"
 import CommentaireModel from "./commentaire.js"
-import LikeModel from "./like.js"
+import LikeModel from "./Like.js"
 
 const {
   security: {
