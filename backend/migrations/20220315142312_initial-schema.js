@@ -6,12 +6,6 @@ export const up = async (knex) => {
     table.text("email").notNullable().unique()
     table.text("passwordHash").notNullable()
     table.text("passwordSalt").notNullable()
-    table.date("dateNaissance").notNullable()
-    table.text("adresse").notNullable()
-    table.text("ville").notNullable()
-    table.text("codePostal").notNullable()
-    table.text("pays").notNullable()
-    table.text("telephone").notNullable().unique()
     table.timestamp("dateCreation").notNullable().defaultTo(knex.fn.now())
   })
   await knex.schema.createTable("sujets", (table) => {

@@ -4,19 +4,7 @@ import config from "../config.js"
 
 export const signUp = async (req, res) => {
   const {
-    body: {
-      prenom,
-      nom,
-      email,
-      password,
-      dateNaissance,
-      adresse,
-      ville,
-      codePostal,
-      pays,
-      telephone,
-      dateCreation,
-    },
+    body: { prenom, nom, email, password, dateCreation },
   } = req
 
   const existingUtilisateur = await UtilisateurModel.query().findOne({ email })
@@ -34,12 +22,6 @@ export const signUp = async (req, res) => {
     email,
     passwordHash: hash,
     passwordSalt: salt,
-    dateNaissance,
-    adresse,
-    ville,
-    codePostal,
-    pays,
-    telephone,
     dateCreation,
   })
 
@@ -65,12 +47,6 @@ export const signIn = async (req, res) => {
           email: utilisateur.email,
           prenom: utilisateur.prenom,
           nom: utilisateur.nom,
-          dateNaissance: utilisateur.dateNaissance,
-          adresse: utilisateur.adresse,
-          ville: utilisateur.ville,
-          codePostal: utilisateur.codePostal,
-          pays: utilisateur.pays,
-          telephone: utilisateur.telephone,
         },
       },
     },
