@@ -18,6 +18,11 @@ const Sujet = ({ sujetId }) => {
   const [operation, setOperation] = useState("+")
   const [addComment, setAddComment] = useState(false)
 
+  let sessionId = 0
+  if (session) {
+    sessionId = JSON.parse(session).payload.utilisateur.id
+  }
+
   useEffect(() => {
     if (sujetId && !isNaN(sujetId)) {
       api
@@ -98,7 +103,7 @@ const Sujet = ({ sujetId }) => {
           </p>
         </span>
       </div>
-      <CommentairesListe utilisateurId={utilisateur.id} sujetId={sujetId} />
+      <CommentairesListe utilisateurId={sessionId} sujetId={sujetId} />
       {formAddComment()}
     </div>
   )

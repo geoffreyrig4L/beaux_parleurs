@@ -16,7 +16,6 @@ const formatterDate = (date) => {
 const CommentaireListe = ({ utilisateurId, sujetId }) => {
   const [commentaires, setCommentaires] = useState([])
   const [apiError, setApiError] = useState(null)
-  const { session } = useContext(AppContext)
 
   if (!sujetId) {
     sujetId = 1
@@ -32,6 +31,7 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
   }, [sujetId])
 
   function likerOuDisliker(commentaire) {
+    console.log(utilisateurId)
     const commentaireId = commentaire.id
     if (
       commentaire.likes_utilisateurs == null ||
@@ -62,7 +62,6 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
     )
   }
 
-  console.log(utilisateurId)
   return (
     <ul>
       {commentaires.map((commentaire) => (
