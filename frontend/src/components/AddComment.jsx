@@ -33,7 +33,7 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
         setApiError(err.response.data.error)
       }
     },
-    [utilisateurId, sujetId, action, apiError, commentaire.id, router]
+    [utilisateurId, sujetId, action, commentaire.id, router]
   )
 
   return addComment ? (

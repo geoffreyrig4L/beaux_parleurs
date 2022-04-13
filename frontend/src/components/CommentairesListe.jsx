@@ -1,13 +1,11 @@
-import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
 import {
   faHeart as faHeartSolid,
   faCircleUser,
 } from "@fortawesome/free-solid-svg-icons"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import api from "../services/api"
 import ModifyOrUpdate from "./ModifyOrUpdate"
-import AppContext from "./AppContext"
 
 const formatterDate = (date) => {
   return (date = new Date(date).toLocaleString())
@@ -30,36 +28,10 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
       )
   }, [sujetId])
 
-  function likerOuDisliker(commentaire) {
-    console.log(utilisateurId)
+  function liker(commentaire) {
     const commentaireId = commentaire.id
-    if (
-      commentaire.likes_utilisateurs == null ||
-      commentaire.likes_utilisateurs != utilisateurId
-    ) {
-      api.post(`likes/commentaire`, { utilisateurId, commentaireId })
-    } else {
-      api.delete(
-        `likes/utilisateur=${utilisateurId}&commentaire=${commentaireId}`
-      )
-    }
+    api.post(`likes/commentaire`, { utilisateurId, commentaireId })
     location.reload()
-  }
-
-  function logoLike(commentaire) {
-    return utilisateurId == commentaire.likes_utilisateurs ? (
-      <FontAwesomeIcon
-        icon={faHeartSolid}
-        className="text-2xl text-lg px-1 text-indigo-600"
-        title="Je n'aime plus"
-      />
-    ) : (
-      <FontAwesomeIcon
-        icon={faHeartRegular}
-        className="text-2xl text-lg px-1 text-indigo-600"
-        title="J'aime"
-      />
-    )
   }
 
   return (
@@ -82,8 +54,12 @@ const CommentaireListe = ({ utilisateurId, sujetId }) => {
               <p className="bg-gray-100 mx-2 p-5 flex-1 rounded-lg w-[600px]">
                 {commentaire.contenu}
               </p>
-              <span onClick={() => likerOuDisliker(commentaire)}>
-                {logoLike(commentaire)}
+              <span onClick={() => liker(commentaire)}>
+                <FontAwesomeIcon
+                  icon={faHeartSolid}
+                  className="text-2xl text-lg px-1 text-indigo-600"
+                  title="J'aime"
+                />
               </span>
               <p className="font-bold text-indigo-600">
                 {commentaire.totalLikes}

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import api from "../services/api"
 
 const formatterDate = (date) => {
-  return (date = new Date(date).toLocaleDateString())
+  return (date = new Date(date).toLocaleString())
 }
 
 const SujetsListe = () => {
@@ -20,7 +20,7 @@ const SujetsListe = () => {
       )
   }, [])
 
-  return (
+  return sujets.length != 0 ? (
     <ul className="mb-[165px]">
       {sujets.map((sujet) => (
         <li key={sujet.id} className="mb-8">
@@ -28,15 +28,8 @@ const SujetsListe = () => {
             <div className="bg-gray-50 w-full p-8 rounded-lg hover:shadow-lg">
               <div className=" flex flex-row justify-between">
                 <span className="font-bold text-2xl mb-8 m-6">{sujet.nom}</span>
-                <span className="font-bold text-indigo-600">
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="text-xl px-1 text-md text-indigo-600"
-                  />
-                  {sujet.like}
-                </span>
               </div>
-              <div className="text-right text-sm">
+              <div className="text-right text-sm font-medium text-indigo-600">
                 <p>{sujet.auteur}</p>
                 <p>{formatterDate(sujet.dateCreation)}</p>
               </div>
@@ -45,6 +38,10 @@ const SujetsListe = () => {
         </li>
       ))}
     </ul>
+  ) : (
+    <h1 className="bg-gray-100 p-12 font-medium rounded-sm">
+      Aucun sujet n'a été publiés.
+    </h1>
   )
 }
 

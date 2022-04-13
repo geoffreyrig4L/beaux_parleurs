@@ -78,7 +78,7 @@ const Sujet = ({ sujetId }) => {
       </div>
     ) : (
       <h1 className="text-red-500 bg-red-100 p-6 rounded-sm mt-[55px] mb-[100px]">
-        Connectez-vous pour ajouter un commentaire.
+        Connectez-vous pour liker ou ajouter un commentaire.
       </h1>
     )
   }
