@@ -5,7 +5,7 @@ npx knex migrate:latest -> Pour mettre a jour le matching de la base de donnee d
 npx knex migrate:rollback   -> Annuler la maj 
 
 Creer un user avec sign-up : 
-curl -X POST localhost:3001/sessions/sign-up -H 'Content-Type:application/json' -d '{"prenom":"Arthur","nom":"Germain","email":"arthur@gmail.com", "password":"mdp","dateNaissance":"2000-06-14","adresse":"32 rue des boulangers","ville":"Nanterre","codePostal":"92000","pays":"France","telephone":"0623786544"}'
+curl -X POST localhost:3001/sessions/sign-up -H 'Content-Type:application/json' -d '{"prenom":"Arthur","nom":"Germain","email":"arthur@gmail.com", "password":"mdp"}'
 
 Pour se connecter avec sign-in : 
 curl -X POST localhost:3001/sessions/sign-in -H 'Content-Type:application/json' -d '{"email":"arthur@gmail.com", "password":"mdp"}'
