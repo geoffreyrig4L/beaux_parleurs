@@ -48,29 +48,12 @@ export const AppContextProvider = (props) => {
   }
 
   const signUp = useCallback(
-    async (
-      prenom,
-      nom,
-      adresse,
-      ville,
-      pays,
-      codePostal,
-      dateNaissance,
-      telephone,
-      email,
-      password
-    ) => {
+    async (prenom, nom, email, password) => {
       try {
         const dateCreation = ""
         await api.post("/sessions/sign-up", {
           prenom,
           nom,
-          adresse,
-          ville,
-          pays,
-          codePostal,
-          dateNaissance,
-          telephone,
           email,
           password,
           dateCreation,
