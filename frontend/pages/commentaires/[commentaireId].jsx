@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import ModifierCommentaire from "../modifierSonCommentaire.jsx"
+import ModifierCommentaire from "../components/ModifierSonCommentaire.jsx"
 
 const CommentairePage = () => {
   const {

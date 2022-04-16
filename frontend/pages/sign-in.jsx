@@ -14,7 +14,7 @@ const SignIn = () => {
       <h1 className="font-bold text-2xl text-center mb-16">Se connecter</h1>
       <div className="w-[600px] m-auto">
         <AuthenticationForm />
-        <p className="italic mt-">Vous n'avez pas de compte ?</p>
+        <p className="italic">Vous n&#8217;avez pas de compte ?</p>
         <a href="/sign-up" className="text-sky-600 underline">
           Créer un compte
         </a>

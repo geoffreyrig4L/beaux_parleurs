@@ -5,7 +5,7 @@ import { faCircleUser } from "@fortawesome/free-regular-svg-icons"
 const Banner = () => {
   return (
     <div className="bg-teal-700 h-24 flex flex-row justify-between items-center text-lg px-122 mb-16">
-      <h1 className="font-bold ml-12 text-xl ">Les bo'Parleurs</h1>
+      <h1 className="font-bold ml-12 text-xl">Les bo&#8217;Parleurs</h1>
       <nav>
         <Link href="/">
           <a className="px-4 text-lg hover:text-teal-200">Voir les sujets</a>

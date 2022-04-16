@@ -106,7 +106,7 @@ const SignUpForm = () => {
                 type="submit"
                 className="bg-gray-100 w-[200px] h-8 rounded-lg hover:bg-teal-600 hover:text-white"
               >
-                S'inscrire
+                S&#8217;inscrire
               </button>
             </div>
           </form>

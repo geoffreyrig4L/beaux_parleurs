@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import AddComment from "./components/AddComment"
-import api from "./services/api"
+import AddComment from "./AddComment"
+import api from "../services/api"
 
-const modifierSonCommentaire = ({ commentaireId }) => {
+const ModifierSonCommentaire = ({ commentaireId }) => {
   const [commentaire, setCommentaire] = useState([])
   const [apiError, setApiError] = useState(null)
 
@@ -35,4 +35,4 @@ const modifierSonCommentaire = ({ commentaireId }) => {
   )
 }
 
-export default modifierSonCommentaire
+export default ModifierSonCommentaire

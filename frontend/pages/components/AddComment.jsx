@@ -1,6 +1,6 @@
 import AppContext from "./AppContext"
 import { Formik, Field, Form } from "formik"
-import { useCallback, useContext, useState, useEffect } from "react"
+import { useCallback, useContext, useState } from "react"
 import api from "../services/api"
 
 const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
@@ -33,7 +33,7 @@ const AddComment = ({ addComment, titre, action, commentaire, sujetId }) => {
         setApiError(err.response.data.error)
       }
     },
-    [utilisateurId, sujetId, action, apiError, commentaire.id, router]
+    [utilisateurId, sujetId, action, commentaire.id, router]
   )
 
   return addComment ? (

@@ -20,7 +20,7 @@ const SujetsListe = () => {
       )
   }, [])
 
-  return (
+  return sujets.length != 0 ? (
     <ul className="mb-[165px]">
       {sujets.map((sujet) => (
         <li key={sujet.id} className="mb-8">
@@ -45,6 +45,8 @@ const SujetsListe = () => {
         </li>
       ))}
     </ul>
+  ) : (
+    <h1 className="p-8 bg-gray-100 rounded-sm">Aucun sujet n&#8217;a été publié.</h1>
   )
 }
 

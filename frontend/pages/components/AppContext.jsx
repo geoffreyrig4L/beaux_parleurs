@@ -38,7 +38,7 @@ export const AppContextProvider = (props) => {
         return { error: err }
       }
     },
-    [initSession, router]
+    [initSession]
   )
 
   const signOut = () => {
@@ -81,7 +81,7 @@ export const AppContextProvider = (props) => {
         return { error: err }
       }
     },
-    [router]
+    [router, signIn]
   )
 
   if (!session && Page.private) {
